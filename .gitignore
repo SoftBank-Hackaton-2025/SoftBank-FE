@@ -1,0 +1,75 @@
+# --- TypeScript ---
+*.tsbuildinfo
+
+# --- Lint/Tool caches ---
+.eslintcache
+.stylelintcache
+.npm/_logs/
+.pnpm-store/
+.yarn/*
+!.yarn/patches/
+!.yarn/plugins/
+!.yarn/releases/
+!.yarn/sdks/
+!.yarn/versions/
+.turbo/
+.nyc_output/
+
+# --- Node/Vite ---
+node_modules/
+dist/
+.vite/
+
+# --- env files (keep local secrets out) ---
+.env
+.env.*
+!.env.example
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# --- logs ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+
+# --- editor/IDE ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+*.iml
+
+
+# --- coverage, test outputs ---
+coverage/
+*.lcov
+
+# --- lockfiles (선택; 팀 정책에 맞게) ---
+package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# --- Common build/static outputs ---
+storybook-static/
+.cache/
+.out/
+.next/
+.vercel/
+.netlify/
+
+# --- Security / Certificates ---
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.cert
