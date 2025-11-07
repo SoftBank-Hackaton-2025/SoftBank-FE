@@ -1,0 +1,110 @@
+/* src/pages/ProjectUpload/ProjectUpload.module.css */
+
+
+/* --- 1. 전체 컨테이너 --- */
+
+.uploadContainer {
+    /* 흰색 카드 형태 */
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 700px;
+    /* 최대 너비 고정 */
+    margin: 40px auto;
+    /* 페이지 중앙 정렬 (상하 여백) */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    /* 텍스트 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* --- 2. 타이틀 (Begin Your Journey) --- */
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #003D5B;
+    /* 사이드바와 통일된 짙은 네이비/틸 */
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 18px;
+    color: #5A7A8B;
+    /* 사이드바 LEVEL 타이틀과 유사한 색 */
+    margin-top: 0;
+    margin-bottom: 32px;
+}
+
+
+/* --- 4. 파일 드롭 영역 --- */
+
+.dropZone {
+    width: 100%;
+    border: 2px dashed #FFA07A;
+    /* 이미지의 점선 (연한 주황) */
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #FFFBF7;
+    /* 매우 연한 주황/크림색 */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.dropZone:hover {
+    background-color: #FFF5EE;
+}
+
+.dropZone p {
+    margin: 4px 0;
+    color: #8B4513;
+    /* 갈색 계열 */
+}
+
+
+/* --- 5. 구름 아이콘 (임시 ☁️ 대신 CSS로) --- */
+
+.cloudIcon {
+    font-size: 40px;
+    /* 임시 아이콘 크기 */
+    color: #FFA07A;
+    /* 연한 주황 */
+    margin-bottom: 16px;
+}
+
+
+/* --- 6. 제출 버튼 (Begin Expedition) --- */
+
+.submitButton {
+    background-color: #FF8C66;
+    /* 이미지의 주황색 버튼 */
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    /* 둥근 버튼 */
+    padding: 14px 40px;
+    margin-top: 32px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+}
+
+.submitButton:hover {
+    background-color: #FF7F50;
+    /* 조금 더 진한 주황 */
+}
+
+.submitButton:active {
+    transform: scale(0.98);
+    /* 클릭 시 살짝 작아짐 */
+}

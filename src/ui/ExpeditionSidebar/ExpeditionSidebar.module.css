@@ -1,0 +1,171 @@
+/* src/ui/ExpeditionSidebar/ExpeditionSidebar.module.css */
+
+
+/* --- 1. 사이드바 전체 컨테이너 --- */
+
+.sidebarContainer {
+    width: 280px;
+    height: 100vh;
+    padding: 24px;
+    background-color: rgba(255, 251, 235, 0.9);
+    font-family: Arial, sans-serif;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+
+/* --- 2. 메인 타이틀 (Expedition) --- */
+
+.mainTitle {
+    font-size: 28px;
+    font-weight: bold;
+    color: #003D5B;
+    margin-top: 0;
+    margin-bottom: 32px;
+}
+
+
+/* --- 3. 레벨 목록 --- */
+
+.levelList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.levelList>li {
+    margin-bottom: 24px;
+}
+
+
+/* --- 4. 레벨 타이틀 (LEVEL 1, LEVEL 2...) --- */
+
+.levelTitle {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5A7A8B;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+/* --- 5. 메인 레벨 아이템 (Project Upload, Code Analysis) --- */
+
+
+/* 👇 클릭 기능(hover, cursor) 다시 추가 */
+
+.levelItem {
+    font-size: 18px;
+    font-weight: 600;
+    color: #003D5B;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    /* 👈 커서 추가 */
+}
+
+
+/* 👇 hover 효과 다시 추가 */
+
+.levelItem:hover {
+    color: #00567C;
+}
+
+
+/* --- 6. 하위 레벨 (Terraform Valley 하위) --- */
+
+.subLevelList {
+    list-style: none;
+    padding-left: 12px;
+    margin: 0;
+}
+
+
+/* 👇 클릭 기능(hover, cursor) 다시 추가 */
+
+.subLevelItem {
+    font-size: 16px;
+    color: #8B4513;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    /* 👈 커서 추가 */
+}
+
+
+/* 👇 hover 효과 다시 추가 */
+
+.subLevelItem:hover {
+    color: #A0522D;
+}
+
+
+/* --- 7. (핵심) CSS 섬 아이콘 --- */
+
+.levelItem::before,
+.subLevelItem::before {
+    content: '';
+    display: inline-block;
+    min-width: 24px;
+    height: 24px;
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.islandStyle1::before {
+    background-color: #8B4513;
+    border-radius: 40% 60% 50% 50% / 50% 50% 60% 40%;
+    position: relative;
+    border: 2px solid #5C2E00;
+}
+
+.islandStyle2::before {
+    border-radius: 50%;
+    background-color: #FFD700;
+    border: 2px solid #DAA520;
+    position: relative;
+}
+
+.islandStyle2::before::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 10px;
+    background-color: #8B4513;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-5deg);
+    border-radius: 2px;
+}
+
+
+/* --- 8. (신규) 활성화된 아이템 스타일 --- */
+
+.activeLevelItem {
+    color: #00567C !important;
+    font-weight: 800 !important;
+    transform: scale(1.03);
+}
+
+.activeLevelItem::before {
+    transform: scale(1.1);
+}
+
+.activeSubItem {
+    color: #A0522D !important;
+    font-weight: 700 !important;
+    transform: translateX(4px);
+}

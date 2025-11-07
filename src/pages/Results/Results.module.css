@@ -1,0 +1,109 @@
+/* src/pages/Results/Results.module.css */
+
+
+/* --- 1. 전체 컨테이너 --- */
+
+.resultsContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* --- 2. 타이틀 --- */
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #003D5B;
+    /* 네이비/틸 */
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 18px;
+    color: #5A7A8B;
+    margin-top: 0;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+
+/* --- 4. 개별 섹션 (YAML, 다운로드) --- */
+
+.section {
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.sectionTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #8B4513;
+    /* 갈색 테마 */
+    border-bottom: 2px solid #F0EAE4;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.sectionIntro {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+/* --- 5. 코드 스니펫 (Generation과 동일) --- */
+
+.codeSnippet {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    max-height: 400px;
+    /* 너무 길어지면 세로 스크롤 */
+}
+
+.codeSnippet pre {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+
+/* --- 6. 다운로드 버튼 (주황색) --- */
+
+.downloadButton {
+    background-color: #FF8C66;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 40px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+    display: block;
+    /* 블록 요소로 변경 */
+    margin: 0 auto;
+    /* 중앙 정렬 */
+}
+
+.downloadButton:hover {
+    background-color: #FF7F50;
+}
+
+.downloadButton:active {
+    transform: scale(0.98);
+}

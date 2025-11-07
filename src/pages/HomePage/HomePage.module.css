@@ -1,0 +1,71 @@
+/* src/pages/HomePage/HomePage.module.css */
+
+.homeContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: 800;
+    color: #003D5B;
+    /* 네이비/틸 */
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.japaneseTitle {
+    font-weight: 500;
+    /* 일본어는 얇게 */
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #8B4513;
+    /* 갈색 테마 */
+    margin-top: 0;
+    margin-bottom: 32px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.description {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.startButton {
+    background-color: #FF8C66;
+    /* 주황색 버튼 */
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 40px;
+    cursor: pointer;
+    text-decoration: none;
+    /* 링크 밑줄 제거 */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+}
+
+.startButton:hover {
+    background-color: #FF7F50;
+}
+
+.startButton:active {
+    transform: scale(0.98);
+}
