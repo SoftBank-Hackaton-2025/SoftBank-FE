@@ -1,21 +1,30 @@
 // src/pages/Results/Results.tsx
 
-import React from 'react';
-// 👇 [변경] 'expedition.context.ts'에서 훅을 가져옵니다.
+import React, { useEffect } from 'react'; // 👈 1. useEffect import
+import { useNavigate } from 'react-router-dom';
 import { useExpedition } from '../../stores/expedition.context'; 
 import styles from './Results.module.css';
 
 const Results: React.FC = () => {
-  const { selectedCloud } = useExpedition();
+  const navigate = useNavigate();
+  // 👇 2. setCompletedSteps 훅 가져오기
+  const { selectedCloud, setCompletedSteps } = useExpedition();
   const provider = selectedCloud || 'Cloud';
 
-  // ... (이하 YAML 코드 및 JSX 코드는 동일합니다) ...
+  // 👇 3. [신규] 페이지가 로드될 때 "3단계(/generation)가 완료됨"을 저장
+  useEffect(() => {
+    setCompletedSteps('/generation');
+  }, [setCompletedSteps]); // 👈 4. 의존성 배열 추가
+
+  // 4단계 페이지에서 보여줄 YAML 코드
   const yamlCode = `
 name: Deploy Terraform to ${provider}
+
 on:
   push:
     branches:
       - main
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -23,16 +32,21 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
+
       - name: 'Setup Terraform'
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: \${{ secrets.TF_API_TOKEN }}
+
       - name: 'Terraform Format'
         run: terraform fmt -check
+
       - name: 'Terraform Init'
         run: terraform init
+
       - name: 'Terraform Plan'
         run: terraform plan
+
       - name: 'Terraform Apply'
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
@@ -42,12 +56,18 @@ jobs:
     alert('다운로드 기능이 구현될 예정입니다.');
   };
 
+  const handleNextStep = () => {
+    navigate('/tips');
+  };
+
   return (
     <div className={styles.resultsContainer}>
-      <h1 className={styles.title}>Deployment & Results</h1>
+      <h1 className={styles.title}>CI/CD & Download</h1>
       <p className={styles.subtitle}>
         Your infrastructure code and deployment workflow are ready.
       </p>
+      
+      {/* --- 1. CI/CD 섹션 --- */}
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>
           GitHub Actions Workflow (.yml) for {provider}
@@ -61,6 +81,8 @@ jobs:
           </pre>
         </div>
       </div>
+      
+      {/* --- 2. 다운로드 섹션 --- */}
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Download Your Bundle</h2>
         <p className={styles.sectionIntro}>
@@ -72,6 +94,16 @@ jobs:
           onClick={handleDownloadBundle}
         >
           Download Bundle (.zip)
+        </button>
+      </div>
+
+      {/* --- 3. 다음 단계 이동 섹션 --- */}
+      <div className={styles.nextStepContainer}>
+        <button
+          className={styles.nextStepButton}
+          onClick={handleNextStep}
+        >
+          Finish & Get Deployment Tips
         </button>
       </div>
     </div>

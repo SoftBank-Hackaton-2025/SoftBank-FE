@@ -5,7 +5,6 @@
 
 .sidebarContainer {
     width: 300px;
-    /* 살짝 넓게 */
     height: 100vh;
     padding: 24px;
     /* 디자인 시안의 어두운 테마 적용 */
@@ -38,7 +37,6 @@
     text-decoration: none;
     color: inherit;
     display: block;
-    /* <h1>의 margin을 올바르게 적용하기 위해 */
 }
 
 
@@ -59,23 +57,24 @@
 
 .stepItem {
     display: flex;
-    gap: 14px;
-    /* 이미지와 텍스트 사이 간격 */
+    /* gap: 10px;  (statusCircle과 thumb 때문에 gap 대신 padding으로 제어) */
     align-items: center;
     padding: 12px;
-    /* 내부 여백 */
+    padding-left: 34px;
+    /* 👈 (상태 원을 위한 여백) */
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
     background: transparent;
     border: 1px solid transparent;
-    /* 링크 스타일 제거 */
     text-decoration: none;
     color: inherit;
+    position: relative;
+    /* 👈 상태 원의 기준점 */
 }
 
 
-/* --- 5. 호버 효과 (디자인 시안 적용) --- */
+/* --- 5. 호버 효과 --- */
 
 .stepItem:hover {
     transform: translateY(-3px);
@@ -84,14 +83,13 @@
 }
 
 
-/* --- 6. 활성화 효과 (디자인 시안 적용) --- */
+/* --- 6. 활성화 효과 (현재 진행 중) --- */
 
 .active {
     background: linear-gradient(90deg, rgba(52, 211, 153, 0.1), rgba(99, 102, 241, 0.03));
     border: 1px solid rgba(52, 211, 153, 0.16);
     box-shadow: 0 12px 30px rgba(16, 24, 40, 0.5);
     transform: none;
-    /* 활성화 시에는 hover 효과(transform) 무시 */
 }
 
 .active:hover {
@@ -107,15 +105,15 @@
     border-radius: 8px;
     overflow: hidden;
     flex: 0 0 60px;
-    /* 60px 고정 크기 */
     box-shadow: 0 4px 18px rgba(2, 6, 23, 0.45);
+    margin-left: 10px;
+    /* 👈 상태 원과 썸네일 사이 간격 */
 }
 
 .thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* 이미지가 꽉 차도록 */
     display: block;
 }
 
@@ -124,12 +122,13 @@
 
 .meta {
     flex: 1;
+    margin-left: 14px;
+    /* 👈 썸네일과 텍스트 사이 간격 */
 }
 
 .stepLabel {
     font-size: 12px;
     color: #94a3b8;
-    /* --muted 색상 */
     text-transform: uppercase;
 }
 
@@ -138,5 +137,60 @@
     margin-top: 4px;
     font-size: 15px;
     color: #e6eef8;
-    /* 밝은 텍스트 */
+}
+
+
+/* --- 9. 상태 표시 원 (신규) --- */
+
+.statusCircle {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #5a7a8b;
+    /* 비활성 상태 (회색 테두리) */
+    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    left: 12px;
+    /* 👈 왼쪽 여백 12px */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+
+/* --- 10. 상태 원 스타일 (활성/완료) (신규) --- */
+
+
+/* "진행 중"일 때 원 스타일 */
+
+.active .statusCircle {
+    border-color: #34d399;
+    /* 테두리 초록색 */
+    background: #34d399;
+    /* 안에도 초록색 */
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+}
+
+
+/* "완료됨"일 때 원 스타일 */
+
+.completed .statusCircle {
+    border-color: #34d399;
+    /* 테두리 초록색 */
+    background: #34d399;
+    /* 안에도 초록색 */
+}
+
+
+/* "완료됨" 아이템은 약간 흐리게 */
+
+.completed {
+    opacity: 0.7;
+}
+
+.completed:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.45);
 }

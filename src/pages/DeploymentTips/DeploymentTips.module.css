@@ -1,9 +1,9 @@
-/* src/pages/Results/Results.module.css */
+/* src/pages/DeploymentTips/DeploymentTips.module.css */
 
 
 /* --- 1. 전체 컨테이너 --- */
 
-.resultsContainer {
+.tipsContainer {
     background-color: #ffffff;
     border-radius: 16px;
     padding: 40px 48px;
@@ -17,8 +17,8 @@
 /* --- 2. 타이틀 --- */
 
 .title {
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 40px;
+    font-weight: 800;
     color: #003D5B;
     /* 네이비/틸 */
     margin-top: 0;
@@ -30,7 +30,7 @@
 /* --- 3. 서브타이틀 --- */
 
 .subtitle {
-    font-size: 18px;
+    font-size: 20px;
     color: #5A7A8B;
     margin-top: 0;
     margin-bottom: 40px;
@@ -38,11 +38,13 @@
 }
 
 
-/* --- 4. 개별 섹션 (YAML, 다운로드) --- */
+/* --- 4. 개별 섹션 --- */
 
 .section {
     width: 100%;
     margin-bottom: 32px;
+    text-align: center;
+    /* 버튼 중앙 정렬을 위해 */
 }
 
 .sectionTitle {
@@ -53,36 +55,54 @@
     border-bottom: 2px solid #F0EAE4;
     padding-bottom: 8px;
     margin-bottom: 16px;
+    text-align: left;
+    /* 제목은 왼쪽 정렬 */
 }
 
 .sectionIntro {
     font-size: 16px;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    text-align: left;
+    /* 설명도 왼쪽 정렬 */
 }
 
 
-/* --- 5. 코드 스니펫 --- */
+/* --- 5. 팁 목록 --- */
 
-.codeSnippet {
-    background-color: #2d2d2d;
-    color: #f8f8f2;
-    border-radius: 8px;
-    padding: 16px;
-    overflow-x: auto;
-    max-height: 400px;
+.tipList {
+    list-style-type: none;
+    /* 기본 불렛 제거 */
+    padding-left: 0;
+    text-align: left;
 }
 
-.codeSnippet pre {
-    margin: 0;
+.tipItem {
+    font-size: 15px;
+    color: #333;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #00567C;
+    /* 왼쪽 강조선 */
+    border-radius: 0 4px 4px 0;
+    line-height: 1.6;
+}
+
+
+/* 팁 내부의 코드 하이라이트 */
+
+.tipItem code {
+    background-color: #e0e0e0;
+    padding: 2px 5px;
+    border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
 }
 
 
-/* --- 6. 다운로드 버튼 (주황색) --- */
+/* --- 6. 콘솔 버튼 (주황색) --- */
 
-.downloadButton {
+.consoleButton {
     background-color: #FF8C66;
     color: white;
     font-size: 18px;
@@ -91,37 +111,26 @@
     border-radius: 30px;
     padding: 14px 40px;
     cursor: pointer;
+    text-decoration: none;
     transition: background-color 0.2s ease, transform 0.1s ease;
     box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
-    display: block;
-    margin: 0 auto;
-    /* 중앙 정렬 */
+    display: inline-block;
+    /* text-align: center와 함께 작동 */
 }
 
-.downloadButton:hover {
+.consoleButton:hover {
     background-color: #FF7F50;
 }
 
-.downloadButton:active {
+.consoleButton:active {
     transform: scale(0.98);
 }
 
 
-/* --- 7. [신규] 다음 단계 이동 --- */
+/* --- 7. 홈으로 가기 버튼 (파란색) --- */
 
-.nextStepContainer {
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 1px solid #E0E0E0;
-    text-align: center;
-}
-
-
-/* [신규] 파란색 계열 버튼 */
-
-.nextStepButton {
+.homeButton {
     background-color: #00567C;
-    /* HikariFlow 메인 컬러 */
     color: white;
     font-size: 16px;
     font-weight: 600;
@@ -129,14 +138,16 @@
     border-radius: 30px;
     padding: 12px 35px;
     cursor: pointer;
+    text-decoration: none;
     transition: background-color 0.2s ease, transform 0.1s ease;
     box-shadow: 0 4px 15px rgba(0, 86, 124, 0.3);
+    display: inline-block;
 }
 
-.nextStepButton:hover {
+.homeButton:hover {
     background-color: #003D5B;
 }
 
-.nextStepButton:active {
+.homeButton:active {
     transform: scale(0.98);
 }
