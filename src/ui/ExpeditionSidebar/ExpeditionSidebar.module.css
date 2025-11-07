@@ -1,15 +1,19 @@
 /* src/ui/ExpeditionSidebar/ExpeditionSidebar.module.css */
 
 
-/* --- 1. 사이드바 전체 컨테이너 --- */
+/* --- 1. 사이드바 전체 (디자인 시안 적용) --- */
 
 .sidebarContainer {
-    width: 280px;
+    width: 300px;
+    /* 살짝 넓게 */
     height: 100vh;
     padding: 24px;
-    background-color: rgba(255, 251, 235, 0.9);
-    font-family: Arial, sans-serif;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    /* 디자인 시안의 어두운 테마 적용 */
+    background: linear-gradient(180deg, rgba(25, 36, 58, 0.9), rgba(11, 18, 32, 0.95));
+    color: #e6eef8;
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
     overflow-y: auto;
     position: fixed;
     left: 0;
@@ -17,155 +21,122 @@
 }
 
 
-/* --- 2. 메인 타이틀 (Expedition) --- */
+/* --- 2. 메인 타이틀 --- */
 
 .mainTitle {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: bold;
-    color: #003D5B;
+    color: #FFFFFF;
+    /* 흰색 */
     margin-top: 0;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+    /* 목록과 간격 */
+    letter-spacing: 0.5px;
+}
+
+.mainTitleLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    /* <h1>의 margin을 올바르게 적용하기 위해 */
 }
 
 
-/* --- 3. 레벨 목록 --- */
+/* --- 3. 단계 목록 (ul) --- */
 
-.levelList {
+.stepsList {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* 아이템 사이 간격 */
 }
 
-.levelList>li {
-    margin-bottom: 24px;
+
+/* --- 4. 개별 단계 (Link) --- */
+
+.stepItem {
+    display: flex;
+    gap: 14px;
+    /* 이미지와 텍스트 사이 간격 */
+    align-items: center;
+    padding: 12px;
+    /* 내부 여백 */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    background: transparent;
+    border: 1px solid transparent;
+    /* 링크 스타일 제거 */
+    text-decoration: none;
+    color: inherit;
 }
 
 
-/* --- 4. 레벨 타이틀 (LEVEL 1, LEVEL 2...) --- */
+/* --- 5. 호버 효과 (디자인 시안 적용) --- */
 
-.levelTitle {
-    font-size: 12px;
-    font-weight: bold;
-    color: #5A7A8B;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.stepItem:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.45);
+}
+
+
+/* --- 6. 활성화 효과 (디자인 시안 적용) --- */
+
+.active {
+    background: linear-gradient(90deg, rgba(52, 211, 153, 0.1), rgba(99, 102, 241, 0.03));
+    border: 1px solid rgba(52, 211, 153, 0.16);
+    box-shadow: 0 12px 30px rgba(16, 24, 40, 0.5);
+    transform: none;
+    /* 활성화 시에는 hover 효과(transform) 무시 */
+}
+
+.active:hover {
+    transform: none;
+}
+
+
+/* --- 7. 썸네일 (섬 이미지) --- */
+
+.thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex: 0 0 60px;
+    /* 60px 고정 크기 */
+    box-shadow: 0 4px 18px rgba(2, 6, 23, 0.45);
+}
+
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 이미지가 꽉 차도록 */
     display: block;
-    margin-bottom: 8px;
 }
 
 
-/* --- 5. 메인 레벨 아이템 (Project Upload, Code Analysis) --- */
+/* --- 8. 메타 (레벨, 제목) --- */
 
+.meta {
+    flex: 1;
+}
 
-/* 👇 클릭 기능(hover, cursor) 다시 추가 */
+.stepLabel {
+    font-size: 12px;
+    color: #94a3b8;
+    /* --muted 색상 */
+    text-transform: uppercase;
+}
 
-.levelItem {
-    font-size: 18px;
+.stepTitle {
     font-weight: 600;
-    color: #003D5B;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 0;
-    transition: transform 0.2s ease, color 0.2s ease;
-    cursor: pointer;
-    /* 👈 커서 추가 */
-}
-
-
-/* 👇 hover 효과 다시 추가 */
-
-.levelItem:hover {
-    color: #00567C;
-}
-
-
-/* --- 6. 하위 레벨 (Terraform Valley 하위) --- */
-
-.subLevelList {
-    list-style: none;
-    padding-left: 12px;
-    margin: 0;
-}
-
-
-/* 👇 클릭 기능(hover, cursor) 다시 추가 */
-
-.subLevelItem {
-    font-size: 16px;
-    color: #8B4513;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 6px 0;
-    transition: transform 0.2s ease, color 0.2s ease;
-    cursor: pointer;
-    /* 👈 커서 추가 */
-}
-
-
-/* 👇 hover 효과 다시 추가 */
-
-.subLevelItem:hover {
-    color: #A0522D;
-}
-
-
-/* --- 7. (핵심) CSS 섬 아이콘 --- */
-
-.levelItem::before,
-.subLevelItem::before {
-    content: '';
-    display: inline-block;
-    min-width: 24px;
-    height: 24px;
-    background-color: transparent;
-    transition: transform 0.2s ease;
-}
-
-.islandStyle1::before {
-    background-color: #8B4513;
-    border-radius: 40% 60% 50% 50% / 50% 50% 60% 40%;
-    position: relative;
-    border: 2px solid #5C2E00;
-}
-
-.islandStyle2::before {
-    border-radius: 50%;
-    background-color: #FFD700;
-    border: 2px solid #DAA520;
-    position: relative;
-}
-
-.islandStyle2::before::after {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 10px;
-    background-color: #8B4513;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-5deg);
-    border-radius: 2px;
-}
-
-
-/* --- 8. (신규) 활성화된 아이템 스타일 --- */
-
-.activeLevelItem {
-    color: #00567C !important;
-    font-weight: 800 !important;
-    transform: scale(1.03);
-}
-
-.activeLevelItem::before {
-    transform: scale(1.1);
-}
-
-.activeSubItem {
-    color: #A0522D !important;
-    font-weight: 700 !important;
-    transform: translateX(4px);
+    margin-top: 4px;
+    font-size: 15px;
+    color: #e6eef8;
+    /* 밝은 텍스트 */
 }

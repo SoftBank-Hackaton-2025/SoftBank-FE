@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>섬 사진 사이드바</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>섬 사진 갤러리</h2>
+        <div class="island-photo">
+            <img src="island1.jpg" alt="섬 사진 1">
+            <p>섬 설명 1</p>
+        </div>
+        <div class="island-photo">
+            <img src="island2.jpg" alt="섬 사진 2">
+            <p>섬 설명 2</p>
+        </div>
+        <div class="island-photo">
+            <img src="island3.jpg" alt="섬 사진 3">
+            <p>섬 설명 3</p>
+        </div>
+        <!-- 추가 섬 사진을 여기에 넣으세요 -->
+    </div>
+    <div class="content">
+        <h1>메인 콘텐츠</h1>
+        <p>여기에 메인 콘텐츠가 들어갑니다.</p>
+    </div>
+</body>
+</html>
