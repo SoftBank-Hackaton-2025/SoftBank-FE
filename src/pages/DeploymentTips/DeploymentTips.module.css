@@ -1,0 +1,153 @@
+/* src/pages/DeploymentTips/DeploymentTips.module.css */
+
+
+/* --- 1. 전체 컨테이너 --- */
+
+.tipsContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* --- 2. 타이틀 --- */
+
+.title {
+    font-size: 40px;
+    font-weight: 800;
+    color: #003D5B;
+    /* 네이비/틸 */
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 20px;
+    color: #5A7A8B;
+    margin-top: 0;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+
+/* --- 4. 개별 섹션 --- */
+
+.section {
+    width: 100%;
+    margin-bottom: 32px;
+    text-align: center;
+    /* 버튼 중앙 정렬을 위해 */
+}
+
+.sectionTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #8B4513;
+    /* 갈색 테마 */
+    border-bottom: 2px solid #F0EAE4;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    text-align: left;
+    /* 제목은 왼쪽 정렬 */
+}
+
+.sectionIntro {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 24px;
+    text-align: left;
+    /* 설명도 왼쪽 정렬 */
+}
+
+
+/* --- 5. 팁 목록 --- */
+
+.tipList {
+    list-style-type: none;
+    /* 기본 불렛 제거 */
+    padding-left: 0;
+    text-align: left;
+}
+
+.tipItem {
+    font-size: 15px;
+    color: #333;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #00567C;
+    /* 왼쪽 강조선 */
+    border-radius: 0 4px 4px 0;
+    line-height: 1.6;
+}
+
+
+/* 팁 내부의 코드 하이라이트 */
+
+.tipItem code {
+    background-color: #e0e0e0;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+/* --- 6. 콘솔 버튼 (주황색) --- */
+
+.consoleButton {
+    background-color: #FF8C66;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 40px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+    display: inline-block;
+    /* text-align: center와 함께 작동 */
+}
+
+.consoleButton:hover {
+    background-color: #FF7F50;
+}
+
+.consoleButton:active {
+    transform: scale(0.98);
+}
+
+
+/* --- 7. 홈으로 가기 버튼 (파란색) --- */
+
+.homeButton {
+    background-color: #00567C;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 35px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(0, 86, 124, 0.3);
+    display: inline-block;
+}
+
+.homeButton:hover {
+    background-color: #003D5B;
+}
+
+.homeButton:active {
+    transform: scale(0.98);
+}

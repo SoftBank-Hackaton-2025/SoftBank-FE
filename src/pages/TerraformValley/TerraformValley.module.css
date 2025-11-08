@@ -1,0 +1,97 @@
+/* src/pages/TerraformValley/TerraformValley.module.css */
+
+
+/* --- 1. 전체 컨테이너 (다른 페이지와 유사) --- */
+
+.valleyContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 900px;
+    /* 다른 페이지보다 조금 넓게 */
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* --- 2. 타이틀 --- */
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #8B4513;
+    /* LEVEL 3의 갈색 테마 */
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 18px;
+    color: #5A7A8B;
+    margin-top: 0;
+    margin-bottom: 40px;
+    /* 옵션 카드와 간격 */
+    text-align: center;
+}
+
+
+/* --- 4. 옵션 카드 그리드 --- */
+
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3개 카드 나란히 */
+    gap: 24px;
+    /* 카드 사이 간격 */
+    width: 100%;
+}
+
+
+/* --- 5. 개별 옵션 카드 --- */
+
+.optionCard {
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    background-color: #FAFAFA;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+    /* 링크 사용 시 높이를 맞추기 위해 추가 */
+}
+
+.optionCard:hover {
+    transform: translateY(-5px);
+    /* 호버 시 살짝 위로 */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.optionCard h2 {
+    font-size: 22px;
+    color: #8B4513;
+    /* 갈색 테마 */
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.optionCard p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+
+/* 👇 3. 링크의 기본 스타일(밑줄, 파란색)을 제거합니다 */
+
+.optionLink {
+    text-decoration: none;
+    color: inherit;
+}

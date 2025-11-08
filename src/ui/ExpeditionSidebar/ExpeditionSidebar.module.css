@@ -1,0 +1,196 @@
+/* src/ui/ExpeditionSidebar/ExpeditionSidebar.module.css */
+
+
+/* --- 1. 사이드바 전체 (디자인 시안 적용) --- */
+
+.sidebarContainer {
+    width: 300px;
+    height: 100vh;
+    padding: 24px;
+    /* 디자인 시안의 어두운 테마 적용 */
+    background: linear-gradient(180deg, rgba(25, 36, 58, 0.9), rgba(11, 18, 32, 0.95));
+    color: #e6eef8;
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+    overflow-y: auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+
+/* --- 2. 메인 타이틀 --- */
+
+.mainTitle {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFFFFF;
+    /* 흰색 */
+    margin-top: 0;
+    margin-bottom: 24px;
+    /* 목록과 간격 */
+    letter-spacing: 0.5px;
+}
+
+.mainTitleLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+
+/* --- 3. 단계 목록 (ul) --- */
+
+.stepsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* 아이템 사이 간격 */
+}
+
+
+/* --- 4. 개별 단계 (Link) --- */
+
+.stepItem {
+    display: flex;
+    /* gap: 10px;  (statusCircle과 thumb 때문에 gap 대신 padding으로 제어) */
+    align-items: center;
+    padding: 12px;
+    padding-left: 34px;
+    /* 👈 (상태 원을 위한 여백) */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    background: transparent;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    /* 👈 상태 원의 기준점 */
+}
+
+
+/* --- 5. 호버 효과 --- */
+
+.stepItem:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.45);
+}
+
+
+/* --- 6. 활성화 효과 (현재 진행 중) --- */
+
+.active {
+    background: linear-gradient(90deg, rgba(52, 211, 153, 0.1), rgba(99, 102, 241, 0.03));
+    border: 1px solid rgba(52, 211, 153, 0.16);
+    box-shadow: 0 12px 30px rgba(16, 24, 40, 0.5);
+    transform: none;
+}
+
+.active:hover {
+    transform: none;
+}
+
+
+/* --- 7. 썸네일 (섬 이미지) --- */
+
+.thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex: 0 0 60px;
+    box-shadow: 0 4px 18px rgba(2, 6, 23, 0.45);
+    margin-left: 10px;
+    /* 👈 상태 원과 썸네일 사이 간격 */
+}
+
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* --- 8. 메타 (레벨, 제목) --- */
+
+.meta {
+    flex: 1;
+    margin-left: 14px;
+    /* 👈 썸네일과 텍스트 사이 간격 */
+}
+
+.stepLabel {
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+.stepTitle {
+    font-weight: 600;
+    margin-top: 4px;
+    font-size: 15px;
+    color: #e6eef8;
+}
+
+
+/* --- 9. 상태 표시 원 (신규) --- */
+
+.statusCircle {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #5a7a8b;
+    /* 비활성 상태 (회색 테두리) */
+    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    left: 12px;
+    /* 👈 왼쪽 여백 12px */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+
+/* --- 10. 상태 원 스타일 (활성/완료) (신규) --- */
+
+
+/* "진행 중"일 때 원 스타일 */
+
+.active .statusCircle {
+    border-color: #34d399;
+    /* 테두리 초록색 */
+    background: #34d399;
+    /* 안에도 초록색 */
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+}
+
+
+/* "완료됨"일 때 원 스타일 */
+
+.completed .statusCircle {
+    border-color: #34d399;
+    /* 테두리 초록색 */
+    background: #34d399;
+    /* 안에도 초록색 */
+}
+
+
+/* "완료됨" 아이템은 약간 흐리게 */
+
+.completed {
+    opacity: 0.7;
+}
+
+.completed:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.45);
+}

@@ -1,0 +1,137 @@
+/* src/pages/Generation/Generation.module.css */
+
+
+/* --- 1. 전체 컨테이너 --- */
+
+.genContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 1200px;
+    /* 3개 카드를 위해 더 넓게 */
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* --- 2. 타이틀 --- */
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #003D5B;
+    /* 네이비/틸 */
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 18px;
+    color: #5A7A8B;
+    margin-top: 0;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+
+/* --- 4. 3사 비교 그리드 --- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3개 카드 나란히 */
+    gap: 24px;
+}
+
+
+/* --- 5. 개별 카드 --- */
+
+.card {
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 24px;
+    background-color: #FAFAFA;
+    display: flex;
+    flex-direction: column;
+}
+
+.providerName {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+
+/* --- 6. 비용 섹션 --- */
+
+.costSection {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.costLabel {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.costValue {
+    font-size: 22px;
+    font-weight: 700;
+    color: #8B4513;
+    /* 갈색 테마 */
+}
+
+
+/* --- 7. 코드 스니펫 --- */
+
+.codeSnippet {
+    background-color: #2d2d2d;
+    /* 어두운 배경 */
+    color: #f8f8f2;
+    /* 밝은 글씨 */
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    /* 코드 길어지면 가로 스크롤 */
+    flex-grow: 1;
+    /* 카드의 남은 공간 차지 */
+    margin-bottom: 24px;
+}
+
+.codeSnippet pre {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+
+/* --- 8. 선택 버튼 --- */
+
+.selectButton {
+    background-color: #FF8C66;
+    /* 주황색 버튼 */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    /* 버튼 꽉 채우기 */
+}
+
+.selectButton:hover {
+    background-color: #FF7F50;
+}

@@ -1,0 +1,78 @@
+/* src/pages/TerraformLoading/TerraformLoading.module.css */
+
+
+/* --- 1. 전체 컨테이너 (CodeAnalysis와 동일) --- */
+
+.analysisContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* --- 2. 타이틀 --- */
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #003D5B;
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 18px;
+    color: #5A7A8B;
+    margin-top: 0;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+
+/* --- 4. 로딩 스피너 --- */
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 8px solid #f3f3f3;
+    /* 스피너 배경 */
+    border-top: 8px solid #003D5B;
+    /* 스피너 색상 (네이비/틸) */
+    border-radius: 50%;
+    margin: 20px auto;
+    /* 애니메이션 적용 */
+    animation: spin 1s linear infinite;
+}
+
+
+/* --- 5. 상태 텍스트 --- */
+
+.statusText {
+    font-size: 16px;
+    color: #8B4513;
+    /* 갈색 계열 */
+    margin-top: 20px;
+}
+
+
+/* --- 스피너 애니메이션 정의 --- */
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

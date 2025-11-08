@@ -1,0 +1,148 @@
+/* src/pages/AISizing/AISizing.module.css */
+
+
+/* --- 1. 전체 컨테이너 (다른 페이지와 유사) --- */
+
+.sizingContainer {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* --- 2. 타이틀 (LEVEL 3 테마) --- */
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #8B4513;
+    /* 갈색 테마 */
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+
+/* --- 3. 서브타이틀 --- */
+
+.subtitle {
+    font-size: 18px;
+    color: #5A7A8B;
+    margin-top: 0;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+
+/* --- 4. 폼 --- */
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* --- 5. 폼 그룹 (fieldset) --- */
+
+.fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 24px;
+}
+
+
+/* --- 6. 그룹 제목 (legend) --- */
+
+.legend {
+    font-size: 20px;
+    font-weight: 600;
+    color: #003D5B;
+    /* 네이비/틸 */
+    padding: 0;
+    margin-bottom: 16px;
+}
+
+
+/* --- 7. 체크박스/라디오 버튼 그룹 --- */
+
+.checkboxGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* --- 8. 개별 라벨 --- */
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.label:hover {
+    background-color: #f9f9f9;
+}
+
+
+/* (커스텀 라디오 버튼 스타일 - 선택 사항) */
+
+.label input[type="radio"] {
+    /* 기본 스타일 숨기기 */
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.label input[type="radio"]:checked {
+    border-color: #FF8C66;
+    /* 주황색 */
+    background-color: #FF8C66;
+    border-width: 4px;
+}
+
+
+/* --- 9. 제출 버튼 (ProjectUpload와 유사) --- */
+
+.submitButton {
+    background-color: #FF8C66;
+    /* 주황색 버튼 */
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 40px;
+    margin-top: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+    align-self: center;
+    /* 버튼 중앙 정렬 */
+}
+
+.submitButton:hover {
+    background-color: #FF7F50;
+}
+
+.submitButton:active {
+    transform: scale(0.98);
+}

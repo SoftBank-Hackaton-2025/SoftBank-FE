@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Island Sidebar</title>
+    <link rel="stylesheet" href="styles/sidebar.css" />
+</head>
+
+<body>
+    <aside class="sidebar">
+        <h2 class="title">Expedition Steps</h2>
+        <ul class="steps" id="steps">
+            <li class="step" data-step="1">
+                <div class="thumb"><img src="assets/islands/island-1.png" alt="Island 1" /></div>
+                <div class="meta">
+                    <div class="step-label">Step 1</div>
+                    <div class="step-title">Start at the Volcano</div>
+                </div>
+            </li>
+            <li class="step" data-step="2">
+                <div class="thumb"><img src="assets/islands/island-1.png" alt="Island 2" /></div>
+                <div class="meta">
+                    <div class="step-label">Step 2</div>
+                    <div class="step-title">Explore the Plains</div>
+                </div>
+            </li>
+            <li class="step" data-step="3">
+                <div class="thumb"><img src="assets/islands/island-1.png" alt="Island 3" /></div>
+                <div class="meta">
+                    <div class="step-label">Step 3</div>
+                    <div class="step-title">Finish at the Shore</div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="controls">
+            <button id="prev">Prev</button>
+            <button id="next">Next</button>
+        </div>
+    </aside>
+
+    <script src="scripts/sidebar.js" defer></script>
+</body>
+
+</html>
