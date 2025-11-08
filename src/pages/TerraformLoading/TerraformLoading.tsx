@@ -1,52 +1,83 @@
 // src/pages/TerraformLoading/TerraformLoading.tsx
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './TerraformLoading.module.css';
-import { useExpedition } from '../../stores/expedition.context'; 
-import { type CloudOption } from '../../stores/expedition.types'; 
-
-// ... (mockCloudOptions는 동일)
-const mockCloudOptions: CloudOption[] = [
-  { provider: 'AWS', logo: 'aws.png', estimatedCost: '$120.50 / month', terraformCode: 'provider "aws" {\n  region = "us-east-1"\n}\n...'},
-  { provider: 'Azure', logo: 'azure.png', estimatedCost: '$115.70 / month', terraformCode: 'provider "azurerm" {\n  features {}\n}\n...'},
-  { provider: 'GCP', logo: 'gcp.png', estimatedCost: '$109.90 / month', terraformCode: 'provider "google" {\n  project = "my-gcp-project"\n}\n...'},
-];
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./TerraformLoading.module.css";
+import { useExpedition } from "../../stores/expedition.context";
+import { type CloudOption } from "../../stores/expedition.types";
 
 const TerraformLoading: React.FC = () => {
   const navigate = useNavigate();
-  // 👇 1. setCompletedSteps 추가
   const { sizingOptions, setGenerationResults, setCompletedSteps } = useExpedition();
-  const [statusText, setStatusText] = useState('Generating recommendations...');
+  const [statusText, setStatusText] = useState("Generating recommendations...");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const startGeneration = async () => {
       try {
-        setStatusText(`Calling AI Sizing Lambda with ${sizingOptions.scale || 'default'} scale...`);
-        
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const results = mockCloudOptions; 
+        // 1. Lambda API 요청 payload 생성
+        const lambdaPayload = {
+          request_id: crypto.randomUUID(),
+          survey: {
+            purpose: sizingOptions.purpose?.[0] || "",
+            "region-location": sizingOptions.region?.[0] || "",
+            availability: sizingOptions.availability?.[0] || "",
+            security: sizingOptions.security?.[0] || "",
+          },
+        };
+
+        console.log("🚀 Lambda 호출 Payload:", lambdaPayload);
+        setStatusText("Calling AI Sizing Lambda with selected survey options...");
+
+        // 2. API Gateway URL (.env 기반)
+        const LAMBDA_URL = `${import.meta.env.VITE_API_BASE_URL}/tf-start`;
+
+        const response = await fetch(LAMBDA_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(lambdaPayload),
+        });
+
+        if (!response.ok) throw new Error(`API Gateway returned ${response.status}`);
+
+        // 3. Lambda 응답 처리
+        const data = await response.json();
+        console.log("✅ Lambda Response:", data);
+
+        // 안전하게 results 추출
+        let results: CloudOption[] = [];
+        if (Array.isArray(data?.results)) {
+          results = data.results.map((item: unknown) => {
+            const obj = item as Partial<CloudOption>;
+            return {
+              provider: obj.provider || "Unknown Provider",
+              logo: obj.logo || "default.png",
+              estimatedCost: obj.estimatedCost || "N/A",
+              terraformCode: obj.terraformCode || "",
+            };
+          });
+        }
+
+        if (results.length === 0) {
+          throw new Error("Lambda returned empty or invalid results");
+        }
 
         setGenerationResults(results);
+        setCompletedSteps("/terraform/sizing");
 
-        // 👇 2. 3단계로 넘어가기 직전, "2단계(/terraform/sizing)가 완료됨"을 저장
-        setCompletedSteps('/terraform/sizing');
-
-        setStatusText('Generation complete. Moving to comparison...');
-        navigate('/generation');
-
+        setStatusText("Generation complete. Moving to comparison...");
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        navigate("/generation");
       } catch (err) {
-        // ... (에러 처리는 동일)
-        console.error(err);
-        setError('Failed to generate recommendations. Please try again.');
-        setStatusText('Error!');
+        console.error("❌ Lambda 호출 실패:", err);
+        setError("Failed to generate recommendations. Please try again.");
+        setStatusText("Error during generation!");
       }
     };
-    startGeneration();
-  }, [navigate, sizingOptions, setGenerationResults, setCompletedSteps]); // 👈 3. 의존성 배열에 추가
 
-  // ... (이하 JSX 코드는 동일)
+    startGeneration();
+  }, [navigate, sizingOptions, setGenerationResults, setCompletedSteps]);
+
   return (
     <div className={styles.analysisContainer}>
       <h1 className={styles.title}>Generating Terraform Code...</h1>
@@ -54,7 +85,7 @@ const TerraformLoading: React.FC = () => {
         Please wait while AI configures your infrastructure and costs.
       </p>
       {!error && <div className={styles.spinner}></div>}
-      <p className={styles.statusText} style={{ color: error ? 'red' : '' }}>
+      <p className={styles.statusText} style={{ color: error ? "red" : "" }}>
         {error ? error : statusText}
       </p>
     </div>
