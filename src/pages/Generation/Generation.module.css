@@ -11,7 +11,7 @@
     max-width: 1200px;
     /* 3개 카드를 위해 더 넓게 */
     margin: 40px auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); */
 }
 
 
