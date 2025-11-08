@@ -12,9 +12,14 @@ export interface PresignedResponse {
 // 2. POST /code-analyze 요청/응답 타입 (상세 명세 가정)
 // ---------------------------
 // 요청: request_id와 S3에 업로드된 파일의 정보 (예: S3 Path 또는 Key)가 필요할 것입니다.
+// export interface AnalysisRequest {
+//   request_id: string;
+//   s3_key: string; // S3에 업로드된 파일 경로
+// }
 export interface AnalysisRequest {
   request_id: string;
-  s3_key: string; // S3에 업로드된 파일 경로
+  s3_key: string;        // S3에 업로드된 파일 경로(키)
+  file_name?: string;    // (선택) 원본 파일명 - 백엔드 로깅 용도면 사용
 }
 
 // 응답: 분석이 시작되었다는 단순 응답
