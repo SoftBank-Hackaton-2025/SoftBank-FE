@@ -1,5 +1,3 @@
-// src/pages/ProjectUpload/ProjectUpload.tsx (수정)
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProjectUpload.module.css';
@@ -39,10 +37,18 @@ const ProjectUpload: React.FC = () => {
       // ------------------------------------
       // Step 1: Presigned URL 및 Request ID 발급 (POST /start)
       // ------------------------------------
+      // presigned.ts 수정으로 인해, 이제 presignedResponse는 Response.data를 바로 가리킵니다.
       const presignedResponse = await fetchPresignedUrl();
+      
+      // 응답 객체에서 upload_url과 request_id를 추출합니다.
       const uploadUrl = presignedResponse.upload_url;
       const requestId = presignedResponse.request_id;
       
+      // 🔴 필수: uploadUrl 또는 requestId가 유효한지 확인
+      if (!uploadUrl || !requestId) {
+          throw new Error(`Invalid response from /start. URL: ${uploadUrl}, ID: ${requestId}`);
+      }
+
       saveRequestId(requestId); // 🔴 백엔드에서 받은 ID 저장
       setStatusText(`2. Uploading to S3... (Request ID: ${requestId})`);
 
@@ -70,7 +76,8 @@ const ProjectUpload: React.FC = () => {
 
     } catch (error) {
       console.error('Upload and Analysis Flow Failed:', error);
-      setStatusText('❌ Upload Failed! Check the console for details.');
+      // 실패 시 statusText에 에러 메시지 표시
+      setStatusText(`❌ Upload Failed! ${error instanceof Error ? error.message : 'Unknown error.'}`);
     } finally {
       setIsUploading(false);
     }
