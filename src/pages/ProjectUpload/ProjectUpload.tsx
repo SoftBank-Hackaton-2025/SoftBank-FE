@@ -65,7 +65,7 @@ const ProjectUpload: React.FC = () => {
       setStatusText('3. Upload successful. Requesting code analysis...');
       
       // 파일 이름 전체를 인수로 전달 (S3 Key 구성용)
-      const fileName = selectedFile.name; 
+      const fileName = selectedFile.name;
       
       await postCodeAnalysis(fileName);
       
