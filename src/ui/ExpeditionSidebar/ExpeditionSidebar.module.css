@@ -1,23 +1,7 @@
 /* src/ui/ExpeditionSidebar/ExpeditionSidebar.module.css */
 
 
-/* --- 1. 사이드바 전체 (디자인 시안 적용) --- */
-
-/* .sidebarContainer {
-    width: 300px;
-    height: 100vh;
-    padding: 24px;
-    background: linear-gradient(180deg, rgba(25, 36, 58, 0.9), rgba(11, 18, 32, 0.95));
-    color: #e6eef8;
-    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(8px);
-    border-right: 1px solid rgba(255, 255, 255, 0.03);
-    overflow-y: auto;
-    position: fixed;
-    left: 0;
-    top: 0;
-} 
-*/
+/* --- 1. 사이드바 전체 (노란색 강화) --- */
 
 .sidebarContainer {
     height: 100%;
@@ -28,26 +12,28 @@
     width: 100%;
     min-height: 560px;
     padding: 24px;
-
-    background: linear-gradient(180deg, rgba(25, 36, 58, 0.9), rgba(11, 18, 32, 0.95));
-    color: #e6eef8;
+    /* 🎨 [변경] 더 밝고 노란 배경색 적용: Cornsilk (#FFF8DC) */
+    background: #FFF8DC;
+    color: #333333;
+    /* 텍스트 색상을 어둡게 */
     border-radius: 20px;
     /* 카드 느낌 */
-    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.35);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    /* 그림자를 연하게 */
     border-right: none;
     /* 카드라서 테두리 대신 radius */
     overflow: auto;
-
-    /* 필요 시 성능/겹침 이슈 있으면 아래 한 줄도 제거 가능 */
-    /* backdrop-filter: blur(8px);  */
+    /* backdrop-filter: blur(8px);  */
 }
+
 
 /* --- 2. 메인 타이틀 --- */
 
 .mainTitle {
     font-size: 26px;
     font-weight: bold;
-    color: #FFFFFF;
+    color: #333333;
+    /* 어두운 텍스트 색상 */
     /* 흰색 */
     margin-top: 0;
     margin-bottom: 24px;
@@ -79,7 +65,7 @@
 
 .stepItem {
     display: flex;
-    /* gap: 10px;  (statusCircle과 thumb 때문에 gap 대신 padding으로 제어) */
+    /* gap: 10px;  (statusCircle과 thumb 때문에 gap 대신 padding으로 제어) */
     align-items: center;
     padding: 12px;
     padding-left: 34px;
@@ -100,17 +86,23 @@
 
 .stepItem:hover {
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.45);
+    /* 밝은 배경에 맞는 연한 호버 배경 */
+    background: rgba(0, 0, 0, 0.03);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    /* 그림자 연하게 */
 }
 
 
 /* --- 6. 활성화 효과 (현재 진행 중) --- */
 
 .active {
-    background: linear-gradient(90deg, rgba(52, 211, 153, 0.1), rgba(99, 102, 241, 0.03));
-    border: 1px solid rgba(52, 211, 153, 0.16);
-    box-shadow: 0 12px 30px rgba(16, 24, 40, 0.5);
+    /* Salmon 계열 유지 */
+    background: linear-gradient(90deg, rgba(240, 128, 128, 0.1), rgba(240, 128, 128, 0.05));
+    /* 연한 Salmon 그라데이션 */
+    border: 1px solid rgba(240, 128, 128, 0.4);
+    /* Salmon 테두리 */
+    box-shadow: 0 8px 20px rgba(240, 128, 128, 0.3);
+    /* 연한 Salmon 그림자 */
     transform: none;
 }
 
@@ -127,7 +119,8 @@
     border-radius: 8px;
     overflow: hidden;
     flex: 0 0 60px;
-    box-shadow: 0 4px 18px rgba(2, 6, 23, 0.45);
+    /* 밝은 배경에 맞는 연한 그림자 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     margin-left: 10px;
     /* 상태 원과 썸네일 사이 간격 */
 }
@@ -150,7 +143,8 @@
 
 .stepLabel {
     font-size: 12px;
-    color: #94a3b8;
+    color: #666666;
+    /* 짙은 회색 */
     text-transform: uppercase;
 }
 
@@ -158,7 +152,8 @@
     font-weight: 600;
     margin-top: 4px;
     font-size: 15px;
-    color: #e6eef8;
+    color: #333333;
+    /* 어두운 텍스트 색상 */
 }
 
 
@@ -167,7 +162,8 @@
 .statusCircle {
     width: 12px;
     height: 12px;
-    border: 2px solid #5a7a8b;
+    /* 비활성 상태 (밝은 배경에 맞는 연한 회색 테두리) */
+    border: 2px solid #aaaaaa;
     /* 비활성 상태 (회색 테두리) */
     border-radius: 50%;
     background: transparent;
@@ -213,6 +209,8 @@
 .completed:hover {
     opacity: 1;
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.45);
+    /* 밝은 배경에 맞는 호버 배경 */
+    background: rgba(0, 0, 0, 0.03);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    /* 그림자 연하게 */
 }

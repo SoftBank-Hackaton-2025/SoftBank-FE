@@ -4,7 +4,8 @@
 /* --- 1. 전체 컨테이너 (다른 페이지와 유사) --- */
 
 .sizingContainer {
-    background-color: #ffffff;
+    /* 배경은 이미 흰색으로 잘 설정되어 있어 변경 없음 */
+    background-color: #FFF8DC;
     border-radius: 16px;
     padding: 40px 48px;
     width: 100%;
@@ -19,7 +20,8 @@
 .title {
     font-size: 36px;
     font-weight: 700;
-    color: #8B4513;
+    /* 🎨 [변경] 메인 제목을 진한 텍스트 색상으로 변경 */
+    color: #333333;
     /* 갈색 테마 */
     margin-top: 0;
     margin-bottom: 8px;
@@ -31,7 +33,8 @@
 
 .subtitle {
     font-size: 18px;
-    color: #5A7A8B;
+    /* 🎨 [변경] 서브타이틀을 읽기 쉬운 회색으로 변경 */
+    color: #666666;
     margin-top: 0;
     margin-bottom: 40px;
     text-align: center;
@@ -62,7 +65,8 @@
 .legend {
     font-size: 20px;
     font-weight: 600;
-    color: #003D5B;
+    /* 🎨 [변경] 그룹 제목을 진한 텍스트 색상으로 변경 */
+    color: #333333;
     /* 네이비/틸 */
     padding: 0;
     margin-bottom: 16px;
@@ -85,6 +89,7 @@
     align-items: center;
     gap: 10px;
     font-size: 16px;
+    /* 텍스트 색상: #333은 이미 밝은 테마에 적합합니다. */
     color: #333;
     cursor: pointer;
     padding: 10px;
@@ -93,6 +98,7 @@
 }
 
 .label:hover {
+    /* 밝은 배경에 적합한 연한 호버 효과 유지 */
     background-color: #f9f9f9;
 }
 
@@ -113,9 +119,10 @@
 }
 
 .label input[type="radio"]:checked {
-    border-color: #FF8C66;
-    /* 주황색 */
-    background-color: #FF8C66;
+    /* 🎨 [변경] DeployQuest 강조색 (Salmon 계열) 사용 */
+    border-color: #F08080;
+    /* 밝은 주황/산호색 */
+    background-color: #F08080;
     border-width: 4px;
 }
 
@@ -123,7 +130,8 @@
 /* --- 9. 제출 버튼 (ProjectUpload와 유사) --- */
 
 .submitButton {
-    background-color: #FF8C66;
+    /* 🎨 [변경] DeployQuest 강조색 (Salmon 계열) 사용 */
+    background-color: #F08080;
     /* 주황색 버튼 */
     color: white;
     font-size: 18px;
@@ -134,13 +142,15 @@
     margin-top: 24px;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+    /* 🎨 [변경] 밝은 테마에 맞는 연한 그림자 */
+    box-shadow: 0 4px 15px rgba(240, 128, 128, 0.4);
     align-self: center;
     /* 버튼 중앙 정렬 */
 }
 
 .submitButton:hover {
-    background-color: #FF7F50;
+    /* 🎨 [변경] 호버 색상도 Salmon 계열로 조정 */
+    background-color: #FF8070;
 }
 
 .submitButton:active {

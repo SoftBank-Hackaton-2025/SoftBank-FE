@@ -1,7 +1,8 @@
 /* src/pages/HomePage/HomePage.module.css */
 
 .homeContainer {
-    background-color: #ffffff;
+    /* 배경은 이미 흰색으로 잘 설정되어 있어 변경 없음 */
+    background-color: #FFF8DC;
     border-radius: 16px;
     padding: 40px 48px;
     width: 100%;
@@ -17,7 +18,8 @@
 .title {
     font-size: 42px;
     font-weight: 800;
-    color: #003D5B;
+    /* 🎨 [변경] 메인 제목을 짙은 텍스트 색상으로 변경 */
+    color: #333333;
     /* 네이비/틸 */
     margin-top: 0;
     margin-bottom: 8px;
@@ -30,7 +32,8 @@
 
 .subtitle {
     font-size: 20px;
-    color: #8B4513;
+    /* 🎨 [변경] 서브타이틀을 읽기 쉬운 회색으로 변경 */
+    color: #666666;
     /* 갈색 테마 */
     margin-top: 0;
     margin-bottom: 32px;
@@ -40,6 +43,7 @@
 
 .description {
     font-size: 16px;
+    /* #333은 이미 밝은 테마에 적합합니다. */
     color: #333;
     line-height: 1.7;
     max-width: 600px;
@@ -47,7 +51,8 @@
 }
 
 .startButton {
-    background-color: #FF8C66;
+    /* 🎨 [변경] DeployQuest 강조색 (Salmon 계열) 사용 */
+    background-color: #F08080;
     /* 주황색 버튼 */
     color: white;
     font-size: 18px;
@@ -59,11 +64,13 @@
     text-decoration: none;
     /* 링크 밑줄 제거 */
     transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 4px 15px rgba(255, 140, 102, 0.4);
+    /* 🎨 [변경] 밝은 테마에 맞는 연한 그림자 */
+    box-shadow: 0 4px 15px rgba(240, 128, 128, 0.4);
 }
 
 .startButton:hover {
-    background-color: #FF7F50;
+    /* 🎨 [변경] 호버 색상도 Salmon 계열로 조정 */
+    background-color: #FF8070;
 }
 
 .startButton:active {
