@@ -14,7 +14,7 @@ export const uploadFileToS3 = async (
 ): Promise<void> => {
   await axios.put(url, file, {
     headers: {
-      'Content-Type': file.type, // 파일의 MIME 타입 지정
+      'Content-Type': 'application/zip', // 파일의 MIME 타입 지정 -> zip 타입으로 변경
     },
     onUploadProgress: (progressEvent) => {
       if (progressEvent.total) {

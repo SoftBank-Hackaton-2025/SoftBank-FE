@@ -5,7 +5,7 @@ import type { AnalysisRequest, AnalysisResponse } from '../types/api';
 
 /**
  * [2단계] 업로드한 파일 분석 요청 (POST /code-analyze)
- * @param s3Key - S3에 업로드된 파일의 경로/키
+ * @param fileName - S3에 업로드된 파일의 이름 (ex: source.zip)
  */
 export const postCodeAnalysis = async (s3Key: string): Promise<AnalysisResponse> => {
   const requestId = getRequestId();
@@ -16,7 +16,7 @@ export const postCodeAnalysis = async (s3Key: string): Promise<AnalysisResponse>
 
   const payload: AnalysisRequest = {
     request_id: requestId,
-    s3_key: s3Key,
+    file_name: "source.zip",
   };
 
   const response = await apiClient.post<AnalysisResponse>('/code-analyze', payload);
