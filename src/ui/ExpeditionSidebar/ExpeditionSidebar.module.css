@@ -3,11 +3,10 @@
 
 /* --- 1. 사이드바 전체 (디자인 시안 적용) --- */
 
-.sidebarContainer {
+/* .sidebarContainer {
     width: 300px;
     height: 100vh;
     padding: 24px;
-    /* 디자인 시안의 어두운 테마 적용 */
     background: linear-gradient(180deg, rgba(25, 36, 58, 0.9), rgba(11, 18, 32, 0.95));
     color: #e6eef8;
     box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
@@ -17,8 +16,31 @@
     position: fixed;
     left: 0;
     top: 0;
-}
+} 
+*/
 
+.sidebarContainer {
+    height: 100%;
+    /* 그리드 아이템으로서 카드화 */
+    position: relative;
+    z-index: 2;
+    /* 메인 카드보다 한 단계 위 */
+    width: 100%;
+    min-height: 560px;
+    padding: 24px;
+
+    background: linear-gradient(180deg, rgba(25, 36, 58, 0.9), rgba(11, 18, 32, 0.95));
+    color: #e6eef8;
+    border-radius: 20px;
+    /* 카드 느낌 */
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.35);
+    border-right: none;
+    /* 카드라서 테두리 대신 radius */
+    overflow: auto;
+
+    /* 필요 시 성능/겹침 이슈 있으면 아래 한 줄도 제거 가능 */
+    /* backdrop-filter: blur(8px);  */
+}
 
 /* --- 2. 메인 타이틀 --- */
 
@@ -107,7 +129,7 @@
     flex: 0 0 60px;
     box-shadow: 0 4px 18px rgba(2, 6, 23, 0.45);
     margin-left: 10px;
-    /* 👈 상태 원과 썸네일 사이 간격 */
+    /* 상태 원과 썸네일 사이 간격 */
 }
 
 .thumb img {
