@@ -1,42 +1,84 @@
+/* 전체에 보더박스 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ====== Global Reset / Base ====== */
+html,
+body,
 #root {
-  max-width: 1280px;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  text-align: initial;
+}
+
+/* ====== App Layout ====== */
+.appContainer {
+  /* 뷰포트 높이 안에서 레이아웃을 “딱” 고정 */
+  height: 100dvh;
+  /* 100vh 대신 100dvh로 모바일 주소창 이슈도 회피 */
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr;
+  /* 행 높이 고정 */
+  gap: 24px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  /* 좌우 가운데 정렬만 유지 (세로 마진 X) */
+  padding: 40px 24px;
+  /* 여백을 padding으로 이동 (높이 안에 포함) */
+  position: relative;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* 그리드 아이템이 내부 스크롤을 가질 수 있게 */
+.appContainer>* {
+  min-height: 0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ====== Main Card (오른쪽) ====== */
+.mainContent {
+  height: 100%;
+  min-height: 0;
+  /* 내부 스크롤 필수 */
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  /* 카드 내부에서만 스크롤 */
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(20, 30, 60, .12);
+  padding: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 반응형(선택) */
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
   }
-  to {
-    transform: rotate(360deg);
+
+  .appContainer {
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 12px;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .mainContent {
+    height: auto;
+    overflow: visible;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
