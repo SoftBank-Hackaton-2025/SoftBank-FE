@@ -1,64 +1,36 @@
 import type { Dispatch, SetStateAction } from "react";
 
+// SizingOptions 타입이 AISizing.tsx 파일에서 사용하는 4가지 키를 모두 포함해야 합니다.
 export type SizingOptions = {
-  purpose: string[];
-  region: string[];
-  availability: string[];
-  security: string[];
+    purpose: string[];
+    region: string[];
+    availability: string[];
+    security: string[];
 };
 
 export interface CloudOption {
-  provider: string;
-  logo: string;
-  estimatedCost: string;
-  terraformCode: string;
+    provider: string;
+    logo: string;
+    estimatedCost: string;
+    terraformCode: string;
 }
 
 export interface ExpeditionState {
-  sizingOptions: SizingOptions;
-  // React 표준 시그니처 쓰면 가장 안전/간단
-  setSizingOptions: Dispatch<SetStateAction<SizingOptions>>;
+    sizingOptions: SizingOptions;
+    // setSizingOptions는 React의 표준 Dispatch 타입을 사용해야 합니다.
+    setSizingOptions: Dispatch<SetStateAction<SizingOptions>>; 
 
-  selectedCloud?: string;
-  setSelectedCloud: (cloud: string) => void;
+    selectedCloud?: string;
+    setSelectedCloud: (cloud: string) => void;
 
-  generationResults: CloudOption[];
-  setGenerationResults: (results: CloudOption[]) => void;
+    generationResults: CloudOption[];
+    setGenerationResults: (results: CloudOption[]) => void;
 
-  completedSteps: Set<string>;
-  setCompletedSteps: (path: string) => void;
-
-  resetSizingOptions: () => void;
+    completedSteps: Set<string>;
+    // setCompletedSteps도 Dispatch를 사용하거나, 아니면 간단한 함수로 통일해야 합니다.
+    // AISizing.tsx에서는 setCompletedSteps?.("/terraform/sizing")로 호출하므로, 
+    // Dispatch 대신 함수 시그니처가 더 적합할 수 있습니다.
+    setCompletedSteps: (path: string) => void; 
+    
+    resetSizingOptions: () => void;
 }
-
-
-// // src/stores/expedition.types.ts
-
-// // 3사 비교 데이터 타입
-// export interface CloudOption {
-//   // ... (기존 코드 동일)
-//   provider: string;
-//   logo: string;
-//   estimatedCost: string;
-//   terraformCode: string;
-// }
-
-// // 1. 전역 저장소 데이터 타입
-// export interface ExpeditionState {
-//   // ... (기존 코드 동일)
-//   sizingOptions: {
-//     scale?: string;
-//     users?: string;
-//   };
-//   setSizingOptions: (options: ExpeditionState['sizingOptions']) => void;
-  
-//   selectedCloud?: string;
-//   setSelectedCloud: (cloud: string) => void;
-
-//   generationResults: CloudOption[];
-//   setGenerationResults: (results: CloudOption[]) => void;
-
-//   // 👇 [신규] 완료된 단계를 저장할 Set
-//   completedSteps: Set<string>; // (path를 저장, 예: '/upload', '/terraform/sizing')
-//   setCompletedSteps: (path: string) => void;
-// }
