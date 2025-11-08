@@ -16,7 +16,7 @@ export const postCodeAnalysis = async (s3Key: string): Promise<AnalysisResponse>
 
   const payload: AnalysisRequest = {
     request_id: requestId,
-    s3_key: s3Key,
+    file_name: "source.zip",
   };
 
   const response = await apiClient.post<AnalysisResponse>('/code-analyze', payload);
