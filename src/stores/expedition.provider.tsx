@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+// src/stores/expedition.provider.tsx
+import React, { useMemo, useState, useCallback } from "react";
 import { ExpeditionContext } from "./expedition.context";
 import type {
   ExpeditionState,
@@ -24,18 +25,23 @@ export const ExpeditionProvider: React.FC<React.PropsWithChildren> = ({
   const [generationResults, setGenerationResults] = useState<CloudOption[]>([]);
   const [completedSteps, _setCompletedSteps] = useState<Set<string>>(new Set());
 
-  // ✅ 타입 가드 없이도 OK (표준 시그니처라 그대로 노출)
+  // 그대로 노출
   const setSizingOptions = _setSizingOptions;
 
-  const setCompletedSteps = (path: string) => {
+  // ✅ 참조 안정화 + 중복 추가 방지
+  const setCompletedSteps = useCallback((path: string) => {
     _setCompletedSteps((prev) => {
-      const copy = new Set(prev);
-      copy.add(path);
-      return copy;
+      if (prev.has(path)) return prev; // 이미 있으면 그대로 반환 → 렌더/루프 방지
+      const next = new Set(prev);
+      next.add(path);
+      return next;
     });
-  };
+  }, []);
 
-  const resetSizingOptions = () => _setSizingOptions(initialSizingOptions);
+  // ✅ 참조 안정화
+  const resetSizingOptions = useCallback(() => {
+    _setSizingOptions(initialSizingOptions);
+  }, []);
 
   const value = useMemo<ExpeditionState>(
     () => ({
@@ -49,7 +55,15 @@ export const ExpeditionProvider: React.FC<React.PropsWithChildren> = ({
       setCompletedSteps,
       resetSizingOptions,
     }),
-    [sizingOptions, selectedCloud, generationResults, completedSteps]
+    [
+      sizingOptions,
+      selectedCloud,
+      generationResults,
+      completedSteps,
+      setSizingOptions,
+      setCompletedSteps,
+      resetSizingOptions,
+    ]
   );
 
   return (
@@ -58,45 +72,3 @@ export const ExpeditionProvider: React.FC<React.PropsWithChildren> = ({
     </ExpeditionContext.Provider>
   );
 };
-
-// // src/stores/expedition.provider.tsx
-
-// import React, { useState } from 'react';
-// import { ExpeditionContext } from './expedition.context';
-// import { type ExpeditionState, type CloudOption } from './expedition.types';
-
-// export const ExpeditionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-//   const [sizingOptions, setSizingOptions] = useState<ExpeditionState['sizingOptions']>({});
-//   const [selectedCloud, setSelectedCloud] = useState<string | undefined>();
-//   const [generationResults, setGenerationResults] = useState<CloudOption[]>([]);
-
-//   // 👇 [신규] 완료된 단계를 저장할 Set (초기값은 비어있음)
-//   const [completedSteps, setCompleted] = useState<Set<string>>(new Set());
-
-//   // 👇 [신규] Set에 완료된 경로를 추가하는 함수
-//   const setCompletedSteps = (path: string) => {
-//     setCompleted((prevSteps) => {
-//       const newSteps = new Set(prevSteps);
-//       newSteps.add(path); // 새로운 경로 추가
-//       return newSteps;
-//     });
-//   };
-
-//   const value = {
-//     sizingOptions,
-//     setSizingOptions,
-//     selectedCloud,
-//     setSelectedCloud,
-//     generationResults,
-//     setGenerationResults,
-//     // 👇 [신규] Context를 통해 Set과 함수 제공
-//     completedSteps,
-//     setCompletedSteps,
-//   };
-
-//   return (
-//     <ExpeditionContext.Provider value={value}>
-//       {children}
-//     </ExpeditionContext.Provider>
-//   );
-// };
