@@ -32,19 +32,56 @@ export interface AnalysisResponse {
 // 3. POST /tf-start 요청/응답 타입 (상세 명세 가정)
 // ---------------------------
 // 요청: request_id와 설문조사 결과 데이터
-export interface RecommendRequest {
+// export interface RecommendRequest {
+//   request_id: string;
+//   survey_data: {
+//     cloud_provider: string;
+//     budget: string;
+//     // ... 기타 설문조사 필드
+//   };
+// }
+
+// // 응답: 추천 결과
+// export interface RecommendResponse {
+//   recommendation_id: string;
+//   terraform_code_snippet: string;
+// }
+
+
+// --- /tf-start ---
+export interface TfStartRequest {
   request_id: string;
-  survey_data: {
-    cloud_provider: string;
-    budget: string;
-    // ... 기타 설문조사 필드
+  survey: {
+    purpose: string;
+    "region-location": string;
+    availability: string;
+    security: string;
   };
 }
 
-// 응답: 추천 결과
-export interface RecommendResponse {
-  recommendation_id: string;
-  terraform_code_snippet: string;
+export type TerraformBlock = { files: Record<string, string> } | string;
+
+export interface CloudCost {
+  totalUSD?: number;
+  breakdown?: Record<string, number>;
+  currency?: "USD";
+}
+
+export interface TfStartResponse {
+  data: {
+    terraform: {
+      "terraform-aws"?: TerraformBlock;
+      "terraform-azure"?: TerraformBlock;
+      "terraform-gcp"?: TerraformBlock;
+    };
+    cost: {
+      "cost-aws"?: CloudCost | number | string;
+      "cost-azure"?: CloudCost | number | string;
+      "cost-gcp"?: CloudCost | number | string;
+    };
+  };
+  status?: "STARTED" | "PENDING" | "FAILED";
+  message?: string;
 }
 
 // ---------------------------

@@ -1,26 +1,52 @@
-// api/recommend.ts
+// src/api/recommend.ts
 import { apiClient } from './client';
 import { getRequestId } from '../utils/requestIdStorage';
-import type { RecommendRequest, RecommendResponse } from '../types/api';
+import type { TfStartRequest, TfStartResponse } from '../types/api';
 
 /**
  * [3단계] 설문조사 후 추천 요청 (POST /tf-start)
- * @param surveyData - 설문조사 결과 데이터
+ * @param survey - { purpose, "region-location", availability, security }
+ * @returns TfStartResponse
  */
 export const postRecommendation = async (
-  surveyData: RecommendRequest['survey_data']
-): Promise<RecommendResponse> => {
-  const requestId = getRequestId();
-
-  if (!requestId) {
-    throw new Error('추천 요청을 위해 유효한 Request ID가 필요합니다.');
+  survey: TfStartRequest['survey']
+): Promise<TfStartResponse> => {
+  const request_id = getRequestId();
+  if (!request_id) {
+    throw new Error('추천 요청을 위해 유효한 Request ID가 필요합니다. /start를 먼저 호출하세요.');
   }
 
-  const payload: RecommendRequest = {
-    request_id: requestId,
-    survey_data: surveyData,
-  };
+  const payload: TfStartRequest = { request_id, survey };
 
-  const response = await apiClient.post<RecommendResponse>('/tf-start', payload);
-  return response.data;
+  const { data } = await apiClient.post<TfStartResponse>('/tf-start', payload, {
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return data;
 };
+
+// // api/recommend.ts
+// import { apiClient } from './client';
+// import { getRequestId } from '../utils/requestIdStorage';
+// import type { RecommendRequest, RecommendResponse } from '../types/api';
+
+// /**
+//  * [3단계] 설문조사 후 추천 요청 (POST /tf-start)
+//  * @param surveyData - 설문조사 결과 데이터
+//  */
+// export const postRecommendation = async (
+//   surveyData: RecommendRequest['survey_data']
+// ): Promise<RecommendResponse> => {
+//   const requestId = getRequestId();
+
+//   if (!requestId) {
+//     throw new Error('추천 요청을 위해 유효한 Request ID가 필요합니다.');
+//   }
+
+//   const payload: RecommendRequest = {
+//     request_id: requestId,
+//     survey_data: surveyData,
+//   };
+
+//   const response = await apiClient.post<RecommendResponse>('/tf-start', payload);
+//   return response.data;
+// };
