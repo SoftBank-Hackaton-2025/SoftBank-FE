@@ -3,7 +3,9 @@ import axios from 'axios';
 // (uuid 라이브러리 import 삭제)
 
 // API 게이트웨이 기본 URL (리전 코드만 실제 값으로 변경)
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -13,7 +15,7 @@ export const apiClient = axios.create({
   },
 });
 
-// ❗️❗️ /start API는 헤더 없이 호출되어야 하므로 인터셉터에 request_id 주입 로직을 넣지 않습니다.
+// /start API는 헤더 없이 호출되어야 하므로 인터셉터에 request_id 주입 로직을 넣지 않습니다.
 // 대신, 각 API 함수에서 request_id를 직접 가져와서 Body에 넣어주어야 합니다.
 apiClient.interceptors.request.use(
   (config) => {
