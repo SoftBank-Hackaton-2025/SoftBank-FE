@@ -1,19 +1,19 @@
 // src/pages/Results/Results.tsx
 
-import React, { useEffect } from 'react'; // 👈 1. useEffect import
-import { useNavigate } from 'react-router-dom';
-import { useExpedition } from '../../stores/expedition.context'; 
-import styles from './Results.module.css';
+import React, { useEffect } from "react"; // 👈 1. useEffect import
+import { useNavigate } from "react-router-dom";
+import { useExpedition } from "../../stores/expedition.context";
+import styles from "./Results.module.css";
 
 const Results: React.FC = () => {
   const navigate = useNavigate();
-  // 👇 2. setCompletedSteps 훅 가져오기
+  // 2. setCompletedSteps 훅 가져오기
   const { selectedCloud, setCompletedSteps } = useExpedition();
-  const provider = selectedCloud || 'Cloud';
+  const provider = selectedCloud || "Cloud";
 
   // 👇 3. [신규] 페이지가 로드될 때 "3단계(/generation)가 완료됨"을 저장
   useEffect(() => {
-    setCompletedSteps('/generation');
+    setCompletedSteps("/generation");
   }, [setCompletedSteps]); // 👈 4. 의존성 배열 추가
 
   // 4단계 페이지에서 보여줄 YAML 코드
@@ -53,20 +53,21 @@ jobs:
 `;
 
   const handleDownloadBundle = () => {
-    alert('다운로드 기능이 구현될 예정입니다.');
+    alert("다운로드 기능이 구현될 예정입니다.");
   };
 
   const handleNextStep = () => {
-    navigate('/tips');
+    // '결과(=4단계)' 완료 표시를 먼저 남김
+    setCompletedSteps("/results");
+    navigate("/tips"); // 그 다음 이동
   };
-
   return (
     <div className={styles.resultsContainer}>
       <h1 className={styles.title}>CI/CD & Download</h1>
       <p className={styles.subtitle}>
         Your infrastructure code and deployment workflow are ready.
       </p>
-      
+
       {/* --- 1. CI/CD 섹션 --- */}
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>
@@ -81,7 +82,7 @@ jobs:
           </pre>
         </div>
       </div>
-      
+
       {/* --- 2. 다운로드 섹션 --- */}
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Download Your Bundle</h2>
@@ -99,10 +100,7 @@ jobs:
 
       {/* --- 3. 다음 단계 이동 섹션 --- */}
       <div className={styles.nextStepContainer}>
-        <button
-          className={styles.nextStepButton}
-          onClick={handleNextStep}
-        >
+        <button className={styles.nextStepButton} onClick={handleNextStep}>
           Finish & Get Deployment Tips
         </button>
       </div>
