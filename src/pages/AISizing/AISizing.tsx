@@ -1,14 +1,17 @@
-// src/pages/AISizing/AISizing.tsx
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useExpedition } from "../../stores/expedition.context";
 import styles from "./AISizing.module.css";
 
-const API_ENDPOINT = `${import.meta.env.VITE_API_BASE_URL}/tf-start`;
+import { postRecommendation } from "../../api/recommend";
+import { toCloudOptionsForDisplay } from "../../utils/transformTfStart";
+
+// 카테고리 상수/타입 (인덱싱 타입 에러 방지)
+const CATEGORIES = ["purpose", "region", "availability", "security"] as const;
+type Category = (typeof CATEGORIES)[number];
 
 // 옵션 매핑 (key -> label)
-const OPTIONS_MAP = {
+const OPTIONS_MAP: Record<Category, { key: string; label: string }[]> = {
   purpose: [
     { key: "portfolio", label: "개인 프로젝트 / 포트폴리오" },
     { key: "poc", label: "내부 테스트 / PoC" },
@@ -30,15 +33,15 @@ const OPTIONS_MAP = {
   security: [
     { key: "public-open", label: "퍼블릭 오픈 OK(테스트/데모)" },
     { key: "public-waf", label: "퍼블릭 + WAF/레이트 리밋" },
-    { key: "private-subnet", label: "프라이빗 서브넷 + ALB/NAT(민감 자원 비공개)" },
+    {
+      key: "private-subnet",
+      label: "프라이빗 서브넷 + ALB/NAT(민감 자원 비공개)",
+    },
     { key: "zero-trust", label: "제로트러스트/VPN 전용(강력 접근제어)" },
   ],
 };
 
-const getLabelFromKey = (
-  category: keyof typeof OPTIONS_MAP,
-  key?: string | null
-) => {
+const getLabelFromKey = (category: Category, key?: string | null) => {
   if (!key) return null;
   const found = OPTIONS_MAP[category].find((o) => o.key === key);
   return found ? found.label : null;
@@ -46,32 +49,30 @@ const getLabelFromKey = (
 
 const AISizing: React.FC = () => {
   const navigate = useNavigate();
-  const { sizingOptions, setSizingOptions, setCompletedSteps } = useExpedition();
+  const {
+    sizingOptions,
+    setSizingOptions,
+    setCompletedSteps,
+    setGenerationResults,
+  } = useExpedition();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSelectSingle =
-    (category: "purpose" | "region" | "availability" | "security", value: string) =>
-    () => {
-      setErrorMessage(null);
-      setSizingOptions((prev) => ({
-        ...prev,
-        [category]: [value],
-      }));
-    };
+  const onSelectSingle = (category: Category, value: string) => () => {
+    setErrorMessage(null);
+    setSizingOptions((prev) => ({
+      ...prev,
+      [category]: [value],
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setErrorMessage(null);
 
-    const categories: (keyof typeof OPTIONS_MAP)[] = [
-      "purpose",
-      "region",
-      "availability",
-      "security",
-    ];
-    const missing = categories.find(
+    // 1) 유효성 검사
+    const missing = CATEGORIES.find(
       (c) => !sizingOptions[c] || sizingOptions[c].length !== 1
     );
     if (missing) {
@@ -79,46 +80,30 @@ const AISizing: React.FC = () => {
       return;
     }
 
-    const requestId = localStorage.getItem("userFlowRequestId");
-    if (!requestId) {
-      setErrorMessage(
-        "오류: 이전 단계의 request_id를 찾을 수 없습니다. 이전 단계로 돌아가 주세요."
-      );
-      console.error("request_id missing in localStorage");
-      return;
-    }
-
-    const payload = {
-      request_id: requestId,
-      survey: {
-        purpose: getLabelFromKey("purpose", sizingOptions.purpose[0]),
-        "region-location": getLabelFromKey("region", sizingOptions.region[0]),
-        availability: getLabelFromKey("availability", sizingOptions.availability[0]),
-        security: getLabelFromKey("security", sizingOptions.security[0]),
-      },
-    };
+    // 2) /tf-start 스펙에 맞춘 survey payload
+    const survey = {
+      purpose: getLabelFromKey("purpose", sizingOptions.purpose[0]) ?? "",
+      "region-location":
+        getLabelFromKey("region", sizingOptions.region[0]) ?? "",
+      availability:
+        getLabelFromKey("availability", sizingOptions.availability[0]) ?? "",
+      security: getLabelFromKey("security", sizingOptions.security[0]) ?? "",
+    } as const;
 
     setIsLoading(true);
 
     try {
-      const res = await fetch(API_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      // 3) /tf-start 호출 (request_id는 내부에서 가져옴)
+      const res = await postRecommendation(survey); // TfStartResponse
+      console.log("/tf-start 응답:", res);
 
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(`API 호출 실패: ${res.status} ${text}`);
-      }
+      // 4) presigned .tf를 즉시 GET → 화면표시용 CloudOption[]으로 변환
+      const results = await toCloudOptionsForDisplay(res);
+      setGenerationResults(results);
 
-      const data = await res.json().catch(() => null);
-      console.log("✅ Lambda/API Gateway 응답:", data);
-
-      // 여기서 data.results 또는 data.message 등 실제 Lambda 반환값 활용 가능
-      // 예: results 존재 시 setCompletedSteps, navigate
+      // 5) 완료 마킹 후 결과 화면으로 이동 (중복 호출 방지)
       setCompletedSteps?.("/terraform/sizing");
-      navigate("/terraform-loading");
+      navigate("/generation");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error("API 호출 오류:", err);
@@ -136,35 +121,32 @@ const AISizing: React.FC = () => {
       </p>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        {/* 각 카테고리 반복 */}
-        {(["purpose", "region", "availability", "security"] as const).map(
-          (category) => (
-            <fieldset key={category} className={styles.fieldset}>
-              <legend className={styles.legend}>
-                {category === "purpose"
-                  ? "배포 목적"
-                  : category === "region"
-                  ? "배포 위치"
-                  : category === "availability"
-                  ? "안정성 (가용성/예산)"
-                  : "보안성"}
-              </legend>
-              <div className={styles.checkboxGroup}>
-                {OPTIONS_MAP[category].map((opt) => (
-                  <label key={opt.key} className={styles.label}>
-                    <input
-                      type="radio"
-                      name={category}
-                      checked={sizingOptions[category].includes(opt.key)}
-                      onChange={onSelectSingle(category, opt.key)}
-                    />
-                    {opt.label}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-          )
-        )}
+        {CATEGORIES.map((category) => (
+          <fieldset key={category} className={styles.fieldset}>
+            <legend className={styles.legend}>
+              {category === "purpose"
+                ? "배포 목적"
+                : category === "region"
+                ? "배포 위치"
+                : category === "availability"
+                ? "안정성 (가용성/예산)"
+                : "보안성"}
+            </legend>
+            <div className={styles.checkboxGroup}>
+              {OPTIONS_MAP[category].map((opt) => (
+                <label key={opt.key} className={styles.label}>
+                  <input
+                    type="radio"
+                    name={category}
+                    checked={sizingOptions[category].includes(opt.key)}
+                    onChange={onSelectSingle(category, opt.key)}
+                  />
+                  {opt.label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))}
 
         {errorMessage && (
           <p className={styles.errorMessage} role="alert">
