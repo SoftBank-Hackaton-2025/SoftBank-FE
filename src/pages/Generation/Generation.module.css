@@ -135,3 +135,202 @@
 .selectButton:hover {
     background-color: #FF7F50;
 }
+
+
+/* 1) 반응형 그리드 보완 */
+@media (max-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 2) 카드 시각 강화 (경계+호버) */
+.card {
+    background: #ffffff;
+    border: 1px solid #e6e9ef;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .07);
+}
+
+/* 3) 헤더/로고 정렬 (선택 적용) */
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.providerMeta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.providerLogo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* 4) 비용 영역 강조 */
+.costSection {
+    margin-bottom: 14px;
+}
+
+.costLabel {
+    font-size: 12px;
+    color: #7a8898;
+}
+
+.costValue {
+    font-size: 20px;
+    color: #B26700;
+    /* 기존 갈색 톤 유지하며 선명도 업 */
+}
+
+/* 5) 링크/프리뷰 액션 행 */
+.linkRow {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0 10px;
+}
+
+.previewBtn,
+.linkBtn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #cfd6e4;
+    background: #f5f7fb;
+    color: #0e1a2b;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.previewBtn:hover,
+.linkBtn:hover {
+    background: #eef2f9;
+}
+
+/* 6) 미니 코드 미리보기(3개가 한 화면에 들어오도록 낮은 높이) */
+.codeSnippetMini {
+    max-height: 150px;
+    overflow: auto;
+    background: #0b1020;
+    color: #cfe3ff;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 11.5px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+}
+
+/* 7) 기존 .codeSnippet은 그대로 사용하되, 미니 버전이 필요할 때만 아래 modifier 사용 */
+.codeSnippet--mini {
+    max-height: 160px;
+    /* 필요 시 짧게 */
+    overflow: auto;
+    margin-bottom: 12px;
+}
+
+/* 8) 선택 버튼 시각 일관성 보정 */
+.selectButton {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .06) inset;
+}
+
+.selectButton:active {
+    transform: translateY(1px);
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 25, 0.55);
+    display: grid;
+    place-items: center;
+    z-index: 50;
+    padding: 24px;
+}
+
+.modal {
+    width: min(960px, 92vw);
+    max-height: 80vh;
+    background: #0b1020;
+    color: #cfe3ff;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #23304f;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #0e1530;
+    border-bottom: 1px solid #19274a;
+}
+
+.modalTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.modalClose {
+    border: 0;
+    background: transparent;
+    color: #cfe3ff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modalActions {
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #0e1530;
+    border-bottom: 1px solid #19274a;
+}
+
+.copyButton {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #2c3655;
+    background: #111a3b;
+    color: #e8f0ff;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.copyButton:hover {
+    background: #141f47;
+}
+
+.modalBody {
+    padding: 14px 16px 18px;
+    overflow: auto;
+}
+
+.modalBody pre {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 12.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    /* 긴 줄도 보기 좋게 */
+}

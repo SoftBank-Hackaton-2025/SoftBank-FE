@@ -49,6 +49,42 @@ export interface AnalysisResponse {
 
 
 // --- /tf-start ---
+// export interface TfStartRequest {
+//   request_id: string;
+//   survey: {
+//     purpose: string;
+//     "region-location": string;
+//     availability: string;
+//     security: string;
+//   };
+// }
+
+// export type TerraformBlock = { files: Record<string, string> } | string;
+
+// export interface CloudCost {
+//   totalUSD?: number;
+//   breakdown?: Record<string, number>;
+//   currency?: "USD";
+// }
+
+// export interface TfStartResponse {
+//   data: {
+//     terraform: {
+//       "terraform-aws"?: TerraformBlock;
+//       "terraform-azure"?: TerraformBlock;
+//       "terraform-gcp"?: TerraformBlock;
+//     };
+//     cost: {
+//       "cost-aws"?: CloudCost | number | string;
+//       "cost-azure"?: CloudCost | number | string;
+//       "cost-gcp"?: CloudCost | number | string;
+//     };
+//   };
+//   status?: "STARTED" | "PENDING" | "FAILED";
+//   message?: string;
+// }
+
+// --- /tf-start ---
 export interface TfStartRequest {
   request_id: string;
   survey: {
@@ -59,30 +95,48 @@ export interface TfStartRequest {
   };
 }
 
-export type TerraformBlock = { files: Record<string, string> } | string;
-
-export interface CloudCost {
-  totalUSD?: number;
-  breakdown?: Record<string, number>;
-  currency?: "USD";
+// 공통 Terraform 블록
+export interface TerraformFile {
+  path: string;
+  contentSnippet: string;
+}
+export interface TerraformArtifacts {
+  s3Key?: string;      // AWS
+  blobUrl?: string;    // Azure
+  gcsUri?: string;     // GCP
+  checksumSha256?: string;
+}
+export interface TerraformBlockCommon {
+  provider: string;    // "aws" | "azurerm" | "google"
+  region: string;
+  version: string;
+  summary: string;
+  variables: Record<string, string>;
+  outputs: Record<string, string>;
+  files: TerraformFile[];
+  artifacts: TerraformArtifacts;
 }
 
+// terraform 배열 원소 (세 개 중 하나)
+export type TerraformEntry =
+  | { "terraform-aws": TerraformBlockCommon }
+  | { "terraform-azure": TerraformBlockCommon }
+  | { "terraform-gcp": TerraformBlockCommon };
+
+// cost는 { aws, azure, gcp } 숫자
 export interface TfStartResponse {
-  data: {
-    terraform: {
-      "terraform-aws"?: TerraformBlock;
-      "terraform-azure"?: TerraformBlock;
-      "terraform-gcp"?: TerraformBlock;
-    };
-    cost: {
-      "cost-aws"?: CloudCost | number | string;
-      "cost-azure"?: CloudCost | number | string;
-      "cost-gcp"?: CloudCost | number | string;
-    };
+  costs: {
+    aws?: string;   // "150.00"
+    gcp?: string;   // "200.21"
+    azure?: string; // "180.14"
   };
-  status?: "STARTED" | "PENDING" | "FAILED";
-  message?: string;
+  terraform_urls: {
+    aws?: string;   // presigned .tf URL
+    gcp?: string;
+    azure?: string;
+  };
 }
+
 
 // ---------------------------
 // 4. POST /git-start 요청/응답 타입 (상세 명세 가정)

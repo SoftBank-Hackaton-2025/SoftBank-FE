@@ -3,21 +3,13 @@ import { apiClient } from './client';
 import { getRequestId } from '../utils/requestIdStorage';
 import type { TfStartRequest, TfStartResponse } from '../types/api';
 
-/**
- * [3단계] 설문조사 후 추천 요청 (POST /tf-start)
- * @param survey - { purpose, "region-location", availability, security }
- * @returns TfStartResponse
- */
 export const postRecommendation = async (
   survey: TfStartRequest['survey']
 ): Promise<TfStartResponse> => {
   const request_id = getRequestId();
-  if (!request_id) {
-    throw new Error('추천 요청을 위해 유효한 Request ID가 필요합니다. /start를 먼저 호출하세요.');
-  }
+  if (!request_id) throw new Error('유효한 Request ID가 필요합니다.');
 
   const payload: TfStartRequest = { request_id, survey };
-
   const { data } = await apiClient.post<TfStartResponse>('/tf-start', payload, {
     headers: { 'Content-Type': 'application/json' },
   });
