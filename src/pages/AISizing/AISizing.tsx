@@ -6,45 +6,81 @@ import styles from "./AISizing.module.css";
 import { postRecommendation } from "../../api/recommend";
 import { toCloudOptionsForDisplay } from "../../utils/transformTfStart";
 
-// 카테고리 상수/타입 (인덱싱 타입 에러 방지)
+// ---- Categories (fixed keys) ----
 const CATEGORIES = ["purpose", "region", "availability", "security"] as const;
 type Category = (typeof CATEGORIES)[number];
 
-// 옵션 매핑 (key -> label)
-const OPTIONS_MAP: Record<Category, { key: string; label: string }[]> = {
+// ---- UI labels (English) ----
+const UI_OPTIONS: Record<Category, { key: string; label: string }[]> = {
   purpose: [
-    { key: "portfolio", label: "개인 프로젝트 / 포트폴리오" },
-    { key: "poc", label: "내부 테스트 / PoC" },
-    { key: "pilot", label: "파일럿(소규모 트래픽)" },
-    { key: "production", label: "실제 상용 서비스" },
+    { key: "portfolio", label: "Personal Project / Portfolio" },
+    { key: "poc", label: "Internal Test / PoC" },
+    { key: "pilot", label: "Pilot (Small Traffic)" },
+    { key: "production", label: "Production Service" },
   ],
   region: [
-    { key: "global", label: "전세계 (글로벌)" },
-    { key: "apac", label: "아시아·태평양 위주" },
-    { key: "kr", label: "한국 전용" },
-    { key: "intranet", label: "사내망/VPN 전용" },
+    { key: "global", label: "Global" },
+    { key: "apac", label: "APAC-focused" },
+    { key: "kr", label: "Korea Only" },
+    { key: "intranet", label: "Intranet/VPN Only" },
   ],
   availability: [
-    { key: "single", label: "초저예산 단일 인스턴스(간헐 다운타임 허용)" },
-    { key: "selfhealing", label: "자동복구/헬스체크(셀프 힐링)" },
-    { key: "ha-multi-az", label: "다중 AZ 고가용성(무중단 지향)" },
-    { key: "dr-multicloud", label: "DR/멀티클라우드(재해 복구 중시)" },
+    { key: "single", label: "Ultra-low cost single instance (allow downtime)" },
+    { key: "selfhealing", label: "Auto-healing / Health Checks" },
+    {
+      key: "ha-multi-az",
+      label: "High Availability (Multi-AZ, near zero-downtime)",
+    },
+    {
+      key: "dr-multicloud",
+      label: "DR / Multi-Cloud (disaster recovery focused)",
+    },
   ],
   security: [
-    { key: "public-open", label: "퍼블릭 오픈 OK(테스트/데모)" },
-    { key: "public-waf", label: "퍼블릭 + WAF/레이트 리밋" },
+    { key: "public-open", label: "Public OK (test/demo)" },
+    { key: "public-waf", label: "Public + WAF / Rate Limit" },
     {
       key: "private-subnet",
-      label: "프라이빗 서브넷 + ALB/NAT(민감 자원 비공개)",
+      label: "Private Subnet + ALB/NAT (hide sensitive resources)",
     },
-    { key: "zero-trust", label: "제로트러스트/VPN 전용(강력 접근제어)" },
+    {
+      key: "zero-trust",
+      label: "Zero-Trust / VPN Only (strict access control)",
+    },
   ],
 };
 
-const getLabelFromKey = (category: Category, key?: string | null) => {
-  if (!key) return null;
-  const found = OPTIONS_MAP[category].find((o) => o.key === key);
-  return found ? found.label : null;
+// ---- Server value map (Korean strings expected by backend) ----
+const SERVER_VALUE_MAP: Record<Category, Record<string, string>> = {
+  purpose: {
+    portfolio: "개인 프로젝트 / 포트폴리오",
+    poc: "내부 테스트 / PoC",
+    pilot: "파일럿(소규모 트래픽)",
+    production: "실제 상용 서비스",
+  },
+  region: {
+    global: "전세계 (글로벌)",
+    apac: "아시아·태평양 위주",
+    kr: "한국 전용",
+    intranet: "사내망/VPN 전용",
+  },
+  availability: {
+    single: "초저예산 단일 인스턴스(간헐 다운타임 허용)",
+    selfhealing: "자동복구/헬스체크(셀프 힐링)",
+    "ha-multi-az": "다중 AZ 고가용성(무중단 지향)",
+    "dr-multicloud": "DR/멀티클라우드(재해 복구 중시)",
+  },
+  security: {
+    "public-open": "퍼블릭 오픈 OK(테스트/데모)",
+    "public-waf": "퍼블릭 + WAF/레이트 리밋",
+    "private-subnet": "프라이빗 서브넷 + ALB/NAT(민감 자원 비공개)",
+    "zero-trust": "제로트러스트/VPN 전용(강력 접근제어)",
+  },
+};
+
+const toServerValue = (category: Category, key?: string | null) => {
+  if (!key) return "";
+  return SERVER_VALUE_MAP[category][key] ?? "";
 };
 
 const AISizing: React.FC = () => {
@@ -71,43 +107,44 @@ const AISizing: React.FC = () => {
     event.preventDefault();
     setErrorMessage(null);
 
-    // 1) 유효성 검사
+    // 1) validation
     const missing = CATEGORIES.find(
       (c) => !sizingOptions[c] || sizingOptions[c].length !== 1
     );
     if (missing) {
-      setErrorMessage("모든 항목에서 하나씩 선택해 주세요.");
+      setErrorMessage("Please select exactly one option for each category.");
       return;
     }
 
-    // 2) /tf-start 스펙에 맞춘 survey payload
+    // 2) survey payload (UI -> server values)
     const survey = {
-      purpose: getLabelFromKey("purpose", sizingOptions.purpose[0]) ?? "",
-      "region-location":
-        getLabelFromKey("region", sizingOptions.region[0]) ?? "",
-      availability:
-        getLabelFromKey("availability", sizingOptions.availability[0]) ?? "",
-      security: getLabelFromKey("security", sizingOptions.security[0]) ?? "",
+      purpose: toServerValue("purpose", sizingOptions.purpose[0]),
+      "region-location": toServerValue("region", sizingOptions.region[0]),
+      availability: toServerValue(
+        "availability",
+        sizingOptions.availability[0]
+      ),
+      security: toServerValue("security", sizingOptions.security[0]),
     } as const;
 
     setIsLoading(true);
 
     try {
-      // 3) /tf-start 호출 (request_id는 내부에서 가져옴)
-      const res = await postRecommendation(survey); // TfStartResponse
-      console.log("/tf-start 응답:", res);
+      // 3) /tf-start
+      const res = await postRecommendation(survey);
+      console.log("/tf-start response:", res);
 
-      // 4) presigned .tf를 즉시 GET → 화면표시용 CloudOption[]으로 변환
+      // 4) fetch presigned .tf -> display
       const results = await toCloudOptionsForDisplay(res);
       setGenerationResults(results);
 
-      // 5) 완료 마킹 후 결과 화면으로 이동 (중복 호출 방지)
+      // 5) mark done & navigate
       setCompletedSteps?.("/terraform/sizing");
       navigate("/generation");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
-      console.error("API 호출 오류:", err);
-      setErrorMessage(`데이터 전송 중 오류가 발생했습니다. (${msg})`);
+      console.error("API error:", err);
+      setErrorMessage(`An error occurred while sending data. (${msg})`);
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +154,7 @@ const AISizing: React.FC = () => {
     <div className={styles.sizingContainer}>
       <h1 className={styles.title}>AI Sizing</h1>
       <p className={styles.subtitle}>
-        AI가 최적의 인프라 규모를 추천할 수 있도록 항목을 선택해 주세요.
+        Select options so AI can recommend the optimal infrastructure size.
       </p>
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -125,15 +162,15 @@ const AISizing: React.FC = () => {
           <fieldset key={category} className={styles.fieldset}>
             <legend className={styles.legend}>
               {category === "purpose"
-                ? "배포 목적"
+                ? "Purpose"
                 : category === "region"
-                ? "배포 위치"
+                ? "Region"
                 : category === "availability"
-                ? "안정성 (가용성/예산)"
-                : "보안성"}
+                ? "Availability / Budget"
+                : "Security"}
             </legend>
             <div className={styles.checkboxGroup}>
-              {OPTIONS_MAP[category].map((opt) => (
+              {UI_OPTIONS[category].map((opt) => (
                 <label key={opt.key} className={styles.label}>
                   <input
                     type="radio"
@@ -159,7 +196,7 @@ const AISizing: React.FC = () => {
           className={styles.submitButton}
           disabled={isLoading}
         >
-          {isLoading ? "요청중..." : "추천 받기"}
+          {isLoading ? "Submitting..." : "Get Recommendations"}
         </button>
       </form>
     </div>
