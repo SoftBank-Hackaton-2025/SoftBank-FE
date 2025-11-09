@@ -27,9 +27,6 @@ export interface ExpeditionState {
     setGenerationResults: (results: CloudOption[]) => void;
 
     completedSteps: Set<string>;
-    // setCompletedSteps도 Dispatch를 사용하거나, 아니면 간단한 함수로 통일해야 합니다.
-    // AISizing.tsx에서는 setCompletedSteps?.("/terraform/sizing")로 호출하므로, 
-    // Dispatch 대신 함수 시그니처가 더 적합할 수 있습니다.
     setCompletedSteps: (path: string) => void; 
     
     resetSizingOptions: () => void;

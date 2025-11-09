@@ -11,11 +11,6 @@ export interface PresignedResponse {
 // ---------------------------
 // 2. POST /code-analyze 요청/응답 타입 (상세 명세 가정)
 // ---------------------------
-// 요청: request_id와 S3에 업로드된 파일의 정보 (예: S3 Path 또는 Key)가 필요할 것입니다.
-// export interface AnalysisRequest {
-//   request_id: string;
-//   s3_key: string; // S3에 업로드된 파일 경로
-// }
 export interface AnalysisRequest {
   request_id: string;
   s3_key: string;        // S3에 업로드된 파일 경로(키)
@@ -31,60 +26,6 @@ export interface AnalysisResponse {
 // ---------------------------
 // 3. POST /tf-start 요청/응답 타입 (상세 명세 가정)
 // ---------------------------
-// 요청: request_id와 설문조사 결과 데이터
-// export interface RecommendRequest {
-//   request_id: string;
-//   survey_data: {
-//     cloud_provider: string;
-//     budget: string;
-//     // ... 기타 설문조사 필드
-//   };
-// }
-
-// // 응답: 추천 결과
-// export interface RecommendResponse {
-//   recommendation_id: string;
-//   terraform_code_snippet: string;
-// }
-
-
-// --- /tf-start ---
-// export interface TfStartRequest {
-//   request_id: string;
-//   survey: {
-//     purpose: string;
-//     "region-location": string;
-//     availability: string;
-//     security: string;
-//   };
-// }
-
-// export type TerraformBlock = { files: Record<string, string> } | string;
-
-// export interface CloudCost {
-//   totalUSD?: number;
-//   breakdown?: Record<string, number>;
-//   currency?: "USD";
-// }
-
-// export interface TfStartResponse {
-//   data: {
-//     terraform: {
-//       "terraform-aws"?: TerraformBlock;
-//       "terraform-azure"?: TerraformBlock;
-//       "terraform-gcp"?: TerraformBlock;
-//     };
-//     cost: {
-//       "cost-aws"?: CloudCost | number | string;
-//       "cost-azure"?: CloudCost | number | string;
-//       "cost-gcp"?: CloudCost | number | string;
-//     };
-//   };
-//   status?: "STARTED" | "PENDING" | "FAILED";
-//   message?: string;
-// }
-
-// --- /tf-start ---
 export interface TfStartRequest {
   request_id: string;
   survey: {

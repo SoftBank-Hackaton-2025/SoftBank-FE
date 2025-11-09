@@ -28,7 +28,7 @@ export const ExpeditionProvider: React.FC<React.PropsWithChildren> = ({
   // 그대로 노출
   const setSizingOptions = _setSizingOptions;
 
-  // ✅ 참조 안정화 + 중복 추가 방지
+  // 참조 안정화 + 중복 추가 방지
   const setCompletedSteps = useCallback((path: string) => {
     _setCompletedSteps((prev) => {
       if (prev.has(path)) return prev; // 이미 있으면 그대로 반환 → 렌더/루프 방지
@@ -38,7 +38,7 @@ export const ExpeditionProvider: React.FC<React.PropsWithChildren> = ({
     });
   }, []);
 
-  // ✅ 참조 안정화
+  // 참조 안정화
   const resetSizingOptions = useCallback(() => {
     _setSizingOptions(initialSizingOptions);
   }, []);
